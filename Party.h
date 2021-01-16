@@ -42,17 +42,18 @@ namespace elc {
 		void setBoss(const Citizen& b)			{ boss = &b; };
 		void setpartyID(int n)				{ partyID = n; };
 
+		//work of shabat 21:00
+		void updateRepsList(unsigned int districtsAmount);
+		void addRepresentative(const Citizen& rep, int distID);
+
 
 		//--https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 		friend void swap(Party& first, Party& second);
 
 		friend std::ostream& operator<<(std::ostream& out, Party& other);
 
-		Party& operator=(Party other) // (1)
-		{
-			swap(*this, other); // (2)
-			return *this;
-		}
+		Party& operator=(Party other);
+
 		void printNameAndId() const;
 
 		void save(ofstream& out) const;

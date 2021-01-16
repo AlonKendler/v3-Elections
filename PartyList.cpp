@@ -5,16 +5,17 @@ namespace elc
 	
 	void PartyList::setParty(string _partyName, const Citizen& boss, int numOfDistricts)
 	{
-		Party temp = Party(_partyName, boss, list.size());
-
+		Party* temp = new Party(_partyName, boss, list.size());
+		//no use of numOfDistricts
 		//handle errors here??
 		setParty(temp);
 
 	}
 
-	void PartyList::setParty(Party& party)
+	void PartyList::setParty(Party* _party)
 	{
-		list.push_back(&party);
+		//check if pary name exist, handle error
+		list.push_back(_party);
 	}
 
 //	Party* PartyList::getParty(int partyID)  {
@@ -31,13 +32,21 @@ namespace elc
 	//	return list[partyID]->getPartyName();
 	//}
 
-
-	void PartyList::PrintNameAndId()
+	void PartyList::updateRepsList(int districtsAmount)
 	{
-		for (unsigned int i = 0; i < list.size(); i++)
-			list[i]->printNameAndId();
+		//here we want to iterate and check each party if his repsList is updated
+		// repsList (2s arrays, columns represent districtAmount)
+		for (auto obj : list)
+		{
+			obj->updateRepsList(districtsAmount);
+		}
 	}
 
+	void PartyList::addPartyCandidate(const Citizen& rep, int partyID, int distID)
+	{
+		//list.getParty(partyID).addRepresentatitve(rep, distID);
+		list.at(partyID)->addRepresentative(rep, distID);
+	}
 
 	void swap(PartyList& first, PartyList& second)
 	{
@@ -50,12 +59,17 @@ namespace elc
 		swap(*this, other);
 		return *this;
 	}
+	void PartyList::PrintNameAndId()
+	{
+		for (unsigned int i = 0; i < list.size(); i++)
+			list[i]->printNameAndId();
+	}
 
 	std::ostream& operator<<(std::ostream& out,  const PartyList& other)
 	{
 		for (unsigned int i = 0; i < other.list.size(); i++)
 		{
-			std::cout << other.list[i] << '\n';
+			std::cout << *other.list[i] << '\n';
 		}
 		return out;
 	}

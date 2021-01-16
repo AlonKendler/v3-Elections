@@ -45,7 +45,7 @@ namespace elc {
 		//const Party* getParty(const int& partyID) const { return parties.getParty(partyID); }
 		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
 		District& getDistrict(int distID, bool flag) { return districts.getDistrict(distID, flag); }
-
+		//const Citizen& getCitizen(const int& id) { return *citizens.getCitizen(id); }
 		const DistrictsList& getDistList() const { return districts; }
 		const CitizensList& getCitizensList() const{ return citizens; }
     
@@ -57,7 +57,7 @@ namespace elc {
 		void addParty(string name, const Citizen& boss);
 		void addDistrict(string name, int num, bool div);
 		//void addPartyCandidate(int id, int partyID, int distID);
-		//void addPartyCandidate(const Citizen& rep, int partyID, int distID);
+		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
 
 		//versions for simple round
 		//void addCitizen(const char* name, int id, int yob);

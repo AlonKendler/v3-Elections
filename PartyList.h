@@ -22,11 +22,14 @@ namespace  elc {
 
 
 		void setParty(string _partyName, const Citizen& boss, int numOfDistricts);
-		void setParty(Party&);
+		void setParty(Party*);
 
 		//Party* getParty(int partyID) ;
 		//string const getPartyName(const int& partyID) const;
 		vector<Party*> const getList() const { return list; }
+
+		void updateRepsList(int districtsAmount);
+		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
 
 
 		void PrintNameAndId();

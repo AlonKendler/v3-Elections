@@ -32,6 +32,14 @@ namespace elc {
 		districts.setDistrict(name, num, div);
 	}
 
+	void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)
+	{
+		parties.updateRepsList(districts.getList().size());
+		//checking repList
+		cout << "now, lets check this thing" << endl;
+		parties.addPartyCandidate(rep, partyID, distID);
+	}
+
 	//void Elections::addPartyCandidate(int id, int partyID, int distID)
 	//{
 	//	Citizen* temp = citizens.getCitizen(id);

@@ -1,27 +1,25 @@
 //#include "CitizenList.h"
 #include "Party.h"
 #include <iostream>
-
+#include "Representative.h"
 
 namespace elc {
 
-	void Party::printNameAndId() const
+	void Party::updateRepsList(unsigned int districtsAmount)
 	{
-		std::cout << "(" << this->partyID << " - " << this->partyName << ")";
+		while (RepsList.size() < districtsAmount)
+		{
+			vector<Representative> temp;
+			RepsList.push_back(temp);
+		}
 	}
 
-	std::ostream& operator<<(std::ostream& out, Party& other)
+	void Party::addRepresentative(const Citizen& rep, int distID)
 	{
-		out
-			<< "Party name: " << other.partyName << " | "
-			<< "party number: " << other.partyID << " | "
-			<< "Party boss-> " << other.boss;
-		//add print of representatives
-		///
-		///
-		//other.printElectors(); --<< this will be deleted
-		return out;
+
+		RepsList.at(distID).push_back(Representative(rep, distID));
 	}
+
 
 	void swap(Party& first, Party& second)
 	{
@@ -31,6 +29,37 @@ namespace elc {
 		swap(first.partyID, second.partyID);
 		swap(first.boss, second.boss);
 		swap(first.RepsList, second.RepsList);
+	}
+
+	std::ostream& operator<<(std::ostream& out, Party& other)
+	{
+		out
+			<< "Party name: " << other.partyName << " | "
+			<< "party number: " << other.partyID << " | "
+			<< "Party boss-> " << "NEEDS FIX! "<< endl;
+		
+		vector< vector<Representative> >::iterator row;
+		vector<Representative>::iterator col;
+		for (row = other.RepsList.begin(); row != other.RepsList.end(); row++)
+		{
+			cout << "Representatives from District ID: " << row->begin()->getID() << endl;
+			for (col = row->begin(); col != row->end(); col++)
+			{
+				cout << *col;
+			}
+		}
+		return out;
+	}
+
+	Party& Party::operator=(Party other) // (1)
+	{
+		swap(*this, other); // (2)
+		return *this;
+	}
+
+	void Party::printNameAndId() const
+	{
+		std::cout << "(" << this->partyID << " - " << this->partyName << ")";
 	}
 
 }

@@ -6,7 +6,6 @@
 namespace elc
 {
 	
-
 	void DistrictsList::setDistrict(string _DistrictName, int numOfReps, bool div)
 	{
 		District* temp;
@@ -43,7 +42,7 @@ namespace elc
 		return *this;
 	}
 
-	void DistrictsList::PrintNameAndId() //new function
+	void DistrictsList::PrintNameAndId() 
 	{
 		for (unsigned int i = 0; i < list.size(); i++)
 			list[i]->printNameAndId();

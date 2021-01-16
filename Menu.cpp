@@ -105,7 +105,6 @@ void mainMenu(Elections& e, bool& doneVoting)
 	bool done = false; //flag for while loop
 	char* date = new char[MAX_SIZE];
 	
-
 	system("CLS");
 	while (!done)
 	{
@@ -188,13 +187,14 @@ void load(Elections* e, bool& doneVoting )
 
 void addDistric(Elections& e)
 {
-	char name[MAX_SIZE];
+	string name;
 	int num;
 	bool type = false;
 
 	std::cout << "enter name of district:" << endl;
 	cin.ignore();
-	cin.getline(name, MAX_SIZE);
+	cin >> name;
+	//cin.getline(name, MAX_SIZE);
 	std::cout << "enter number of representitves:" << endl; cin >> num;
 	std::cout << "enter type of district: (0 - normal, 1 - diveded):" << endl; cin >> type;
 
@@ -214,13 +214,12 @@ void addDistric(Elections& e)
 
 void addCitizen(Elections& e)
 {
-	char name[MAX_SIZE];
+	string name;
 	int id, yob, distID;
-	std::cout << "enter name" << endl;
-	cin.ignore(); cin.getline(name, MAX_SIZE);
-
-	std::cout << "enter id" << endl; cin >> id;
+	std::cout << "enter name" << endl;			cin >> name;
+	std::cout << "enter id" << endl;			cin >> id;
 	std::cout << "enter year of birth" << endl; cin >> yob;
+	
 	//Handle simple round
 	if (!e.getRoundType())
 	{
@@ -238,13 +237,11 @@ void addCitizen(Elections& e)
 
 void addParty(Elections& e)
 {
-	char name[MAX_SIZE];
+	string name;
 	int id;
 	const Citizen* temp;
-	std::cout << "enter name of the party:" << endl;
-	cin.ignore(); cin.getline(name, MAX_SIZE);
-	//extra, check if party name doesnt exist yet.
-	std::cout << "enter id of president" << endl; cin >> id;
+	std::cout << "enter name of the party:" << endl;		cin >> name;
+	std::cout << "enter id of president" << endl;			cin >> id;
 	temp = e.findCitizen(id);
 	while (temp == nullptr)
 	{
@@ -282,8 +279,7 @@ void addPartyCandidates(Elections& e)
 		e.printDistrictsNameAndID(); std::cout << endl;
 		cin >> distID;
 	}
-	//e.addPartyCandidate(*temp, partyID, distID);
-	std::cout << "function on work........" << endl;
+	e.addPartyCandidate(*temp, partyID, distID);
 }
 
 void openVotingMenu(Elections& e, bool& doneVoting)

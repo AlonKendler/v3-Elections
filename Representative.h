@@ -10,22 +10,22 @@ namespace elc
 	class Representative
 	{
 	private:
-		int partyID;
-		Citizen* rep;
+		int ID; //partyID || DistrictID
+		const Citizen* rep;
 
 	public:
-		Representative() : partyID(0), rep(nullptr)
+		Representative() : ID(0), rep(nullptr)
 		{
 			cout << "ctor representative" << endl;
 		}
 
-		Representative(Citizen& other, int id) : rep(&other), partyID(id) {};
+		Representative(const Citizen& other, int id) : rep(&other), ID(id) {};
 		virtual ~Representative() {};
 
-		void setpartyID(const int& _id) { partyID = _id; }
+		void setID(const int& _id) { ID = _id; }
 		void setRep(Citizen& r) { rep = &r; }
 
-		const int& getPartyID() { return partyID; }
+		const int& getID() { return ID; }
 		const Citizen& getRep() { return *rep; }
 
 
@@ -36,9 +36,8 @@ namespace elc
 
 		friend std::ostream& operator<<(std::ostream& out, Representative& other)
 		{
-			out <<
-				"Represenataitve from party:" << other.partyID <<
-				*other.rep << endl;
+			out << *other.rep << endl;;
+			return out;
 		}
 	};
 }
