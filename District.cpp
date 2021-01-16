@@ -16,12 +16,10 @@ namespace elc
 		this->voters_precentage = num;
 		return true;
 	}
-	void District::setDistCitizenInList(Citizen&_citizen)
+	void District::setDistCitizenInList(const Citizen&_citizen)
 	{
-		//notice, this copys the data
-		//consider use of list<citizen*>
-		citizens.push_back(&_citizen);
-
+		//using citizen* list, this should not copy the data
+		citizens.push_back(const_cast<Citizen*>(&_citizen));
 	}
 
 	bool District::initRepsList(const int& size /*, Party* list*/)

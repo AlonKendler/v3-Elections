@@ -1,7 +1,7 @@
 
 #include "Citizen.h"
 #include "district.h"
-
+#include "DistrictsList.h"
 
 
 
@@ -50,22 +50,22 @@ namespace elc {
 		out.write(rcastcc(&distID), sizeof(distID));
 	
 	}
-	//void Citizen::load(std::ifstream& in, const DistrictsList& _list) //districts
-	//{
-	//	int len, distID;
-	//	in.read(rcastc(&len), sizeof(len));
-	//	char* _name = new char[len + 1];
-	//	in.read(_name, len);
-	//	_name[len] = '\0';  //notice, we assign string to char*
-	//	name = _name;		 //then, assign it to the string name
-	//	delete[] _name; 	 //at last, delete the temporary char* 
-	//	in.read(rcastc(&ID), sizeof(ID));
-	//	in.read(rcastc(&YOB), sizeof(YOB));
-	//	in.read(rcastc(&hasVoted), sizeof(hasVoted));
-	//	in.read(rcastc(&distID), sizeof(distID));
-	//
-	//	//dist = &(_list.getDistrict(distID));
-	//}
+	void Citizen::load(std::ifstream& in, const DistrictsList& _list) //districts
+	{
+		int len, distID;
+		in.read(rcastc(&len), sizeof(len));
+		char* _name = new char[len + 1];
+		in.read(_name, len);
+		_name[len] = '\0';  //notice, we assign string to char*
+		name = _name;		 //then, assign it to the string name
+		delete[] _name; 	 //at last, delete the temporary char* 
+		in.read(rcastc(&ID), sizeof(ID));
+		in.read(rcastc(&YOB), sizeof(YOB));
+		in.read(rcastc(&hasVoted), sizeof(hasVoted));
+		in.read(rcastc(&distID), sizeof(distID));
+	
+		dist = &(_list.getDistrict(distID));
+	}
 }
 
 

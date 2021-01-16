@@ -6,6 +6,8 @@
 #include "Representative.h"
 
 using namespace std;
+class CitizensList;
+
 namespace elc {
 
 	
@@ -26,7 +28,7 @@ namespace elc {
 			RepsList = o.RepsList;
 		}
 
-		~Party(){}
+		virtual ~Party(){}
 		
 		//--Getters--//
 		string getPartyName() const				{ return partyName; };
@@ -53,8 +55,8 @@ namespace elc {
 		}
 		void printNameAndId() const;
 
-	//	void save(ofstream& out) const;
-	//	void load(ifstream& in, const CitizensList& _list);
+		void save(ofstream& out) const;
+		void load(ifstream& in, const CitizensList& _list);
 
 	};
 

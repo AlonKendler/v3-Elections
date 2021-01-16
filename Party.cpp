@@ -12,7 +12,7 @@ namespace elc {
 
 	std::ostream& operator<<(std::ostream& out, Party& other)
 	{
-		cout
+		out
 			<< "Party name: " << other.partyName << " | "
 			<< "party number: " << other.partyID << " | "
 			<< "Party boss-> " << other.boss;

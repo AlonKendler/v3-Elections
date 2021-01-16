@@ -26,8 +26,8 @@ namespace elc
 
 	public:
 
-		//District() : distID(0), numOfReps(0),
-		//	citizens(), RepsList(), voters_precentage(0) {};
+		District() : distID(0), numOfReps(0),
+			citizens(), RepsList(), voters_precentage(0) {};
 
 
 		District(string _name, int _numOfReps, int _id) :name(_name), distID(_id), numOfReps(_numOfReps),
@@ -51,7 +51,7 @@ namespace elc
 		void setnumOfReps(const int& _t)			{ numOfReps = _t; }
 		bool setVotersPercentage(int& allCitizens);
 		bool setVotersPersentage(const float& num);
-		void setDistCitizenInList(Citizen&);
+		void setDistCitizenInList(const Citizen&);
 
 		//seters of repsList
 
@@ -102,7 +102,6 @@ namespace elc
 		
 		void printNameAndId();
 
-		//void operator=(const District&);
 		bool isDivided();
 
 		void save(ofstream& out) const;
@@ -118,7 +117,7 @@ namespace elc
 	private:
 
 	public:
-		//Divided() : District() {}
+		Divided() : District() {} 
 		Divided(string _name, int _numOfReps, int id) : District(_name, _numOfReps, id) {}
 		Divided(const Divided& o) : District(o) {}
 		virtual ~Divided() {};
