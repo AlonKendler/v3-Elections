@@ -58,43 +58,43 @@ namespace elc
 	}
 
 
-	//void DistrictsList::save(std::ofstream& out) const
-	//{
-	//	bool type = false;
-	//	int size = list.size();
-	//	int capacity = list.capacity();
-	//
-	//	out.write(rcastcc(&capacity), sizeof(capacity));
-	//	out.write(rcastcc(&size), sizeof(size));
-	//	for (int i = 0; i < size ; ++i)
-	//	{
-	//		type = list[i]->isDivided();
-	//		out.write(rcastcc(&type), sizeof(type));
-	//		list[i]->save(out);
-	//	}
-	//}
+	void DistrictsList::save(ofstream& out) const
+	{
+		bool type = false;
+		int size = list.size();
+		int capacity = list.capacity();
 
-	//void DistrictsList::load(ifstream& in)
-	//{
-	//	bool type = false;
-	//	int size;
-	//	int capacity;
-	//	in.read(rcastc(&capacity), sizeof(capacity));
-	//	in.read(rcastc(&size), sizeof(size));
-	//
-	//	list = vector<District*>(capacity);
-	//	for (int i = 0; i < size; ++i)
-	//	{
-	//		in.read(rcastc(&type), sizeof(type));
-	//		if (type) // ==1 meand divided
-	//		{
-	//			list[i] = new Divided();
-	//		}
-	//		else
-	//		{
-	//			list[i] = new District();
-	//		}
-	//		list[i]->load(in);
-	//	}
-	//}
+		out.write(rcastcc(&capacity), sizeof(capacity));
+		out.write(rcastcc(&size), sizeof(size));
+		for (auto itr : list)
+		{
+			type = itr->isDivided();
+			out.write(rcastcc(&type), sizeof(type));
+			itr->save(out);
+		}
+	}
+
+	void DistrictsList::load(ifstream& in)
+	{
+		bool type = false;
+		int size;
+		int capacity;
+		in.read(rcastc(&capacity), sizeof(capacity));
+		in.read(rcastc(&size), sizeof(size));
+	
+		list = vector<District*>(capacity);
+		for (int i = 0; i < size; ++i)
+		{
+			in.read(rcastc(&type), sizeof(type));
+			if (type) // ==1 meand divided
+			{
+				list[i] = new Divided();
+			}
+			else
+			{
+				list[i] = new District();
+			}
+			list[i]->load(in);
+		}
+	}
 }

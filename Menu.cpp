@@ -253,7 +253,6 @@ void addCitizen(Elections& e)
 			<< e.getDate() << endl <<  " enter year of birth: "; cin >> yob;
 	}
 
-
 	//Handle simple round
 	try {
 

@@ -36,8 +36,8 @@ namespace  elc {
 		DistrictsList& operator=(DistrictsList other);
 		friend std::ostream& operator<<(std::ostream& out, const DistrictsList& other);
 
-		//void save(ofstream& out) const;
-		//void load(ifstream& in);
+		void save(ofstream& out) const;
+		void load(ifstream& in);
 
 	};
 

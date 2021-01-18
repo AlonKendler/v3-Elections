@@ -42,14 +42,14 @@ namespace elc {
 	{
 		int distID = dist->getDistID();
 		int len = name.size();
-		out.write(rcastcc(&len), sizeof(len));									 // name length
-		out.write(rcastcc(name.c_str()), len);									 // len+1 for the '\0'
-		out.write(rcastcc(&ID), sizeof(ID));									 // int ID
-		out.write(rcastcc(&YOB), sizeof(YOB));									 // int - yob
+		out.write(rcastcc(&len), sizeof(len));				 // name length
+		out.write(rcastcc(name.c_str()), len);				 
+		out.write(rcastcc(&ID), sizeof(ID));				 // int ID
+		out.write(rcastcc(&YOB), sizeof(YOB));				 // int - yob
 		out.write(rcastcc(&hasVoted), sizeof(hasVoted));
 		out.write(rcastcc(&distID), sizeof(distID));
-	
 	}
+
 	void Citizen::load(std::ifstream& in, const DistrictsList& _list) //districts
 	{
 		int len, distID;

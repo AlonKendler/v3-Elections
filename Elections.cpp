@@ -117,12 +117,10 @@ namespace elc {
 	/**************************serialiazion***************************/
 		void Elections::save(ofstream& out) const
 		{
-		//	int len = strlen(date); 
-		//	out.write(rcastcc(&len), sizeof(len));                 //save len of date
-		//	out.write(date, len);                                  //save date
-			out.write(rcastcc(&roundType), sizeof(roundType));	   //save round type
-
-				//districts.save(out);
+			out.write(rcastcc(&roundType), sizeof(roundType));	 
+				
+				date.save(out);
+				districts.save(out); 
 				citizens.save(out);
 				//parties.save(out);
 				voting.save(out);
@@ -131,17 +129,12 @@ namespace elc {
 
 		void Elections::load(ifstream& in)
 		{
-			int len;
-			in.read(rcastc(&len), sizeof(len));
-		//	date = new char[len + 1];
-		//
-		//	in.read(date, len);
-		//	date[len] = '\0';
 			in.read(rcastc(&roundType), sizeof(roundType));
 
-			//districts.load(in);
+			date.load(in);
+			districts.load(in);
 			citizens.load(in, districts);
-			fixLoadOfDistricts();								//handle districts, assings proper citizens
+			fixLoadOfDistricts();			//handle districts, assings proper citizens
 			//parties.load(in, citizens);
 			voting.load(in);
 		}

@@ -74,7 +74,7 @@ namespace elc
 		//-----------------------------------------------------------------------------
 		friend void swap(District& first, District& second) // nothrow
 		{
-			// enable ADL (not necessary in our case, but good practice)
+			// enable ADL (not necessary in our case, but good practice) 
 			using std::swap;
 
 			// by swapping the members of two objects,

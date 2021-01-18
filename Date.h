@@ -43,5 +43,20 @@ namespace elc {
 			year = other.year;
 			return *this;
 		}
+
+		void save(ofstream& out) const
+		{
+			out.write(reinterpret_cast<const char*>(&day), sizeof(day));
+			out.write(reinterpret_cast<const char*>(&month), sizeof(month));
+			out.write(reinterpret_cast<const char*>(&year), sizeof(year));
+		}
+
+		void load(ifstream& in)
+		{
+			in.read(reinterpret_cast<char*>(&day), sizeof(day));
+			in.read(reinterpret_cast<char*>(&month), sizeof(month));
+			in.read(reinterpret_cast<char*>(&year), sizeof(year));
+		}
+
 	};
 };
