@@ -1,4 +1,5 @@
 #pragma once
+#include <exception>
 #include <iostream>
 #include <fstream>
 
@@ -24,7 +25,11 @@ namespace elc {
 
 		Citizen() : ID(0), YOB(0), hasVoted(false), dist(nullptr) {}
 		Citizen(string _name, int id, const District& _dist, int year)
-			: name(_name), ID(id), dist(&_dist), YOB(year), hasVoted(false) {}
+			: name(_name), ID(id), dist(&_dist), YOB(year), hasVoted(false) 
+		{
+			if (YOB < 0 || YOB > 2020) throw invalid_argument("invalid year of birth");
+			if (dist == nullptr) throw invalid_argument("distirct pointer of citizen is nullptr");
+		}
 
 		Citizen(const Citizen& o) : name(o.name), ID(o.ID), 
 			dist(o.dist), YOB(o.YOB), hasVoted(o.hasVoted)  { };

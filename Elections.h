@@ -4,6 +4,7 @@
 #include "PartyList.h"
 #include "DistrictsList.h"
 #include "Votes.h"
+#include "Date.h"
 
 using namespace std;
 
@@ -15,15 +16,16 @@ namespace elc {
 	{
 	private:
 		int roundType; // 0 = normal, 1 = simple
-		char* date;
+		//char* date;
+		Date date;
 		PartyList parties;
 		CitizensList citizens;
 		DistrictsList districts;
 		Votes voting;
 	public:
 
-		Elections() : date(nullptr), roundType(0) {};
-		~Elections() {if (date != nullptr) delete[] date; };
+		Elections() : roundType(0) {};
+		~Elections() {};
 		Elections(ifstream& in)
 		{
 			load(in);
@@ -34,24 +36,23 @@ namespace elc {
 			districts.setDistrict(name, reps, true);
 		}
 
-		int getPartiesLength() const { return parties.getList().size(); }
-		int getCitizensLength() const { return citizens.getList().size(); }
-		int getDistrictsLength() const { return districts.getList().size(); }
+		int getPartiesLength() const				{ return parties.getList().size(); }
+		int getCitizensLength() const				{ return citizens.getList().size(); }
+		int getDistrictsLength() const				{ return districts.getList().size(); }
 
+		const Date& getDate() const						{ return date; }
+		const int& getRoundType() const				{ return roundType;  }
 
-		const char* getDate() const { return date; }
-		const int& getRoundType() const { return roundType;  }
+		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
+		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
+		const DistrictsList& getDistList() const	   { return districts; }
+		const CitizensList& getCitizensList() const    { return citizens; }
+    
+		void setDate(const Date& _date)					{ date = _date; }
+		void setRoundType(int _type)				{ roundType = _type; }
 
 		//const Party* getParty(const int& partyID) const { return parties.getParty(partyID); }
-		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
-		District& getDistrict(int distID, bool flag) { return districts.getDistrict(distID, flag); }
 		//const Citizen& getCitizen(const int& id) { return *citizens.getCitizen(id); }
-		const DistrictsList& getDistList() const { return districts; }
-		const CitizensList& getCitizensList() const{ return citizens; }
-    
-		bool setDate(char* date);
-		bool setRoundType(int _type);
-
 
 		void addCitizen(string name, int id, const District& dist, int yob);
 		void addParty(string name, const Citizen& boss);

@@ -4,25 +4,19 @@
 using namespace std;
 namespace elc {
 
-	bool Elections::setDate(char* _date)
-	{
-		int size = strlen(_date);
-		if (date != nullptr)
-			delete[] date;
-
-		date = new char[size + 1];
-		memcpy(date, _date, sizeof(char) * size);
-		date[size] = '\0';
-		return true;
-	}
-
-	bool Elections::setRoundType(int _type) { return this->roundType = _type; }
 
 	void Elections::addCitizen(string name, int id, const District& dist, int yob)
 	{
-		citizens.setCitizen(name, id, yob, dist);
+		try {
+			citizens.setCitizen(name, id, yob, dist);
+		}
+		catch (std::exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+			throw;
+		}
 		districts.setCitizenInDist(citizens.getList().back(), dist); //we just push_back a citizen to citizen list, so we get it.
 	}
+
 	void Elections::addParty(string name, const Citizen& boss)
 	{
 		parties.setParty(name, boss, districts.getList().size());
@@ -123,9 +117,9 @@ namespace elc {
 	/**************************serialiazion***************************/
 		void Elections::save(ofstream& out) const
 		{
-			int len = strlen(date); 
-			out.write(rcastcc(&len), sizeof(len));                 //save len of date
-			out.write(date, len);                                  //save date
+		//	int len = strlen(date); 
+		//	out.write(rcastcc(&len), sizeof(len));                 //save len of date
+		//	out.write(date, len);                                  //save date
 			out.write(rcastcc(&roundType), sizeof(roundType));	   //save round type
 
 				//districts.save(out);
@@ -139,10 +133,10 @@ namespace elc {
 		{
 			int len;
 			in.read(rcastc(&len), sizeof(len));
-			date = new char[len + 1];
-
-			in.read(date, len);
-			date[len] = '\0';
+		//	date = new char[len + 1];
+		//
+		//	in.read(date, len);
+		//	date[len] = '\0';
 			in.read(rcastc(&roundType), sizeof(roundType));
 
 			//districts.load(in);

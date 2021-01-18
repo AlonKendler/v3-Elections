@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Elections.h"
 
 using namespace std;
@@ -79,18 +80,29 @@ void openingMenu(Elections& e)
 
 void inputDateAndElectionRound(Elections& e)
 {
-	char* date = new char[MAX_SIZE];
+	Date _date;
+	int day, month, year;
 	int type = 0, reps = 0;
 	char distName[20] = "system-District";
 
-	std::cout << " Welcome to Roy & Alon Election program!" << endl
-		<< "please enter the date fot this run in 'DD/MM/YYYY' format: " << endl;
-	cin.ignore();
-	cin.getline(date, MAX_SIZE);
-	e.setDate(date);
-	delete[] date;
+	cout << " Welcome to Roy & Alon Election program!" << endl;
+	while(_date.getYear() == 1970) //temp condition, default year is 1970
+	{
+		cout << "please enter the date fot this run in 'DD/MM/YYYY' format: " << endl;
+		cout << "Enter Day: "; cin >> day;	   
+		cout << "Enter Month: "; cin >> month; 
+		cout << "Enter Year: "; cin >> year;   
+
+		try { _date =  Date(day, month, year); }
+		catch (exception& ex)
+		{
+			cout << ex.what() << endl;
+		}
+	}
+	e.setDate(_date); //sets e.date after handle input
 
 	std::cout << "choose Election round type (0 - normal) , (1 - simple) : "; cin >> type;
+	if (type != 0 && type != 1) cout << "That imput was not a choice... ill make it a Simple round.." << endl;
 	if (type)
 	{
 		e.setRoundType(type);
@@ -212,25 +224,54 @@ void addDistric(Elections& e)
 	std::cout << "all good, passed input" << endl;
 }
 
+bool validateCitizenAge(Elections& e, int yob)
+{
+	int electionYear = e.getDate().getYear();
+	if (electionYear - yob > 18)
+		return true;
+	else
+		return false;
+}
+
 void addCitizen(Elections& e)
 {
-	string name;
+	string name, idStr;
 	int id, yob, distID;
 	std::cout << "enter name" << endl;			cin >> name;
-	std::cout << "enter id" << endl;			cin >> id;
-	std::cout << "enter year of birth" << endl; cin >> yob;
-	
-	//Handle simple round
-	if (!e.getRoundType())
+	std::cout << "enter id" << endl;			cin >> idStr;
+	while (!(std::all_of(idStr.begin(), idStr.end(), ::isdigit)) || idStr.size()!=9)
 	{
-		std::cout << "enter district from avilable: ";
-		e.printDistrictsNameAndID(); std::cout << endl;
-		cin >> distID;
-		e.addCitizen(name, id, e.getDistrict(distID), yob);
+		//validates id cotains only digits, and is of size == 9
+		cout << "invalid id, 9 digits require: "; cin >> idStr; cout << endl;
 	}
-	else // if simple, we want to pass add citizen function without district
+	id = stoi(idStr); //converts string to int
+
+	std::cout << "enter year of birth" << endl; cin >> yob;
+	while (!validateCitizenAge(e, yob))
 	{
-		 e.addCitizen(name, id,e.getDistrict(0),yob); //in simple round, 0 is default id
+		cout << "age smaller than 18, compared to election date:"
+			<< e.getDate() << endl <<  " enter year of birth: "; cin >> yob;
+	}
+
+
+	//Handle simple round
+	try {
+
+		if (!e.getRoundType())
+		{
+			std::cout << "enter district from avilable: ";
+			e.printDistrictsNameAndID(); std::cout << endl;
+			cin >> distID;
+			e.addCitizen(name, id, e.getDistrict(distID), yob);
+		}
+		else // if simple, we want to pass add citizen function without district
+		{
+				e.addCitizen(name, id,e.getDistrict(0),yob); //in simple round, 0 is default id
+		}
+	}
+	catch (std::exception& ex) {
+		cout << "Error: " << ex.what() << endl;
+		
 	}
 	std::cout << "all good, passed input" << endl;
 }

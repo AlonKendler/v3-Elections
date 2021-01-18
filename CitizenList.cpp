@@ -5,7 +5,7 @@ namespace elc
 
 	void CitizensList::setCitizen(const string name, int id, int yob, const District& district)
 	{
-		setCitizen(Citizen(name, id, district, yob));
+			setCitizen(Citizen(name, id, district, yob));
 	}
 
 	void CitizensList::setCitizen(const Citizen& citizen)

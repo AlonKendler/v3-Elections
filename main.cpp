@@ -13,6 +13,7 @@ int main()
 	openingMenu(e);
 
 
+
 	//reinder to handle require delete[]
 	//distirctList, partyList -> why? there vector<ptr*>
 

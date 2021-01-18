@@ -54,7 +54,13 @@ namespace elc {
 	{
 		int len, distID;
 		in.read(rcastc(&len), sizeof(len));
-		char* _name = new char[len + 1];
+		char* _name;
+		try {
+			_name = new char[len + 1];
+		}
+		catch (bad_alloc& ex) {
+			cout << ex.what() << endl; exit(1);
+		}
 		in.read(_name, len);
 		_name[len] = '\0';  //notice, we assign string to char*
 		name = _name;		 //then, assign it to the string name
