@@ -38,7 +38,7 @@ namespace  elc {
 		PartyList& operator=(PartyList other);
 		friend std::ostream& operator<<(std::ostream& out, const PartyList& other);
 
-		//void save(ofstream& out) const;
-		//void load(ifstream& in, const CitizensList& _list);
+		void save(ofstream& out) const;
+		void load(ifstream& in, const CitizensList& _list);
 	};
 }

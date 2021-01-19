@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Representative.h"
 
+
 namespace elc {
 
 	void Party::updateRepsList(unsigned int districtsAmount)
@@ -38,8 +39,8 @@ namespace elc {
 			<< "party number: " << other.partyID << " | "
 			<< "Party boss-> " << "NEEDS FIX! "<< endl;
 		
-		vector< vector<Representative> >::iterator row;
-		vector<Representative>::iterator col;
+		vector< vector<Representative> >::iterator row;	//similar to i-j for loop
+		vector<Representative>::iterator col;			//with iterators
 		for (row = other.RepsList.begin(); row != other.RepsList.end(); row++)
 		{
 			cout << "Representatives from District ID: " << row->begin()->getID() << endl;
@@ -62,78 +63,55 @@ namespace elc {
 		std::cout << "(" << this->partyID << " - " << this->partyName << ")";
 	}
 
-}
 
 
 	//================================seralization============================================
-	//void Party::save(ofstream& out) const
-	//{
-	//	int len = partyName.size();
-	//	int bs = boss.getID();
-	//	out.write(rcastcc(&len), sizeof(len));
-	//	out.write(rcastcc(partyName.c_str()), len);
-	//
-	//	out.write(rcastcc(&partyNumber), sizeof(partyNumber));
-	//	out.write(rcastcc(&numberOfParty), sizeof(numberOfParty));
-	//	out.write(rcastcc(&bs), sizeof(bs));
-	//
-	//	out.write(rcastcc(&elec_size), sizeof(elec_size));
-	//	out.write(rcastcc(&elec_length), sizeof(elec_length));
-	//	for (int i = 0; i < elec_length; i++)
-	//	{
-	//		electors[i].save(out);
-	//	}
-	//
-	//}
-	//
-	//void Party::load(ifstream& in, const CitizensList& _list)
+	void Party::save(ofstream& out) const
+	{
+		int len = partyName.size();
+		int bs = boss->getID();
+		out.write(rcastcc(&len), sizeof(len));
+		out.write(rcastcc(partyName.c_str()), len);
+	
+		out.write(rcastcc(&partyID), sizeof(partyID));
+		out.write(rcastcc(&bs), sizeof(bs));
+	
+		//add repsLisst save
+		//add repsLisst save
+		//add repsLisst save
+		//add repsLisst save
+		//add repsLisst save
+		//add repsLisst save
+	
+	}
+	
+	//void elc::Party::load(std::ifstream& in, const CitizensList& _list)
 	//{
 	//	int len, id;
 	//	in.read(rcastc(&len), sizeof(len));
-	//	char* temp = new char[len + 1];
-	//	in.read(temp, len);
-	//	temp[len] = '\0';
-	//	partyName = temp;
-	//	delete[] temp;
-	//	in.read(rcastc(&partyNumber), sizeof(partyNumber));
-	//	in.read(rcastc(&numberOfParty), sizeof(numberOfParty));
+	//	char* _name;
+	//	try {
+	//		_name = new char[len + 1];
+	//	}
+	//	catch (bad_alloc& ex) {
+	//		cout << ex.what() << endl; exit(1);
+	//	}
+	//	in.read(_name, len);
+	//	_name[len] = '\0';		 //notice, we assign string to char*
+	//	partyName = _name;		 //then, assign it to the string name
+	//	delete[] _name; 		 //at last, delete the temporary char* 
+	//
+	//	in.read(rcastc(&partyID), sizeof(partyID));
 	//	in.read(rcastc(&id), sizeof(id)); //reads boss id;
 	//
-	//	boss = *(_list.getCitizen(id));
+	//	//boss = (_list.getCitizen(id));
+	//	boss =_list.getCitizen(id);
 	//
-	//	in.read(rcastc(&elec_size), sizeof(elec_size));
-	//	in.read(rcastc(&elec_length), sizeof(elec_length));
-	//
-	//	electors = new Elector[elec_size];
-	//	for (int i = 0; i < elec_length; i++)
-	//		electors[i].load(in, _list);
+	////	in.read(rcastc(&elec_size), sizeof(elec_size));
+	////	in.read(rcastc(&elec_length), sizeof(elec_length));
+	////
+	////	electors = new Elector[elec_size];
+	////	for (int i = 0; i < elec_length; i++)
+	////		electors[i].load(in, _list);
 	//}
-
-	//void Elector::save(ofstream& out) const
-	//{
-	//	out.write(rcastcc(&numOfSenators), sizeof(numOfSenators));
-	//	Senator* temp = head;
-	//	int citzId;
-	//	while (temp)
-	//	{
-	//		citzId = temp->candidate.getID();
-	//		out.write(rcastcc(&citzId), sizeof(citzId));
-	//		temp = temp->getNext();
-	//	}
-	//}
-//	void Elector::load(ifstream& in, const CitizensList& _list)
-//	{
-//		Citizen* temp;
-//		int citzId;
-//		in.read(rcastc(&numOfSenators), sizeof(numOfSenators));
-//		for (int i = 0; i < numOfSenators; i++)
-//		{
-//			in.read(rcastc(&citzId), sizeof(citzId));
-//			temp = (_list.getCitizen(citzId));
-//			Elector::addSenator(*temp);
-//			numOfSenators--; //NOTICE! addSenator() increases numOfSenators, not needed while loading form file.
-//		}
-//
-//	}
-//
-//}
+}

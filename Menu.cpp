@@ -172,6 +172,7 @@ void save(Elections& e, bool& doneVoting)
 	}
 	outfile.write(rcastcc(&doneVoting), sizeof(doneVoting));
 	e.save(outfile);
+
 	cout << "data was saved to file: " << name << endl;
 	outfile.close();
 }
@@ -270,9 +271,7 @@ void addCitizen(Elections& e)
 	}
 	catch (std::exception& ex) {
 		cout << "Error: " << ex.what() << endl;
-		
 	}
-	std::cout << "all good, passed input" << endl;
 }
 
 void addParty(Elections& e)

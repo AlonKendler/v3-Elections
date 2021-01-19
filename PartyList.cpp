@@ -74,30 +74,24 @@ namespace elc
 		return out;
 	}
 
-	//void PartyList::save(ofstream& out) const
-	//{
-	//	int size = list.size();
-	//	int capacity = list.capacity();
-	//
-	//	out.write(rcastcc(&capacity), sizeof(capacity));
-	//	out.write(rcastcc(&size), sizeof(size));
-	//	for (int i = 0; i < size; ++i)
-	//	{
-	//		list[i]->save(out);
-	//	}
-	//}
-	//
-	//void PartyList::load(ifstream& in, const CitizensList& _list)
-	//{
-	//	int size;
-	//	int capacity;
-	//	in.read(rcastc(&capacity), sizeof(capacity));
-	//	in.read(rcastc(&size), sizeof(size));
-	//
-	//	list = vector<Party*>(capacity);
-	//	for (int i = 0; i < size; i++)
-	//	{
-	//		list[i]->load(in, _list);
-	//	}
-	//}
+	void PartyList::save(ofstream& out) const
+	{
+		int size = list.size();
+		out.write(rcastcc(&size), sizeof(size));
+		for(auto itr : list)
+		{
+			itr->save(out);
+		}
+	}
+	
+	void PartyList::load(ifstream& in, const CitizensList& _list)
+	{
+		int size;
+		in.read(rcastc(&size), sizeof(size));
+		list = vector<Party*>(size);
+		for(auto itr : list)
+		{
+			itr->load(in, _list);
+		}
+	}
 }

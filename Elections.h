@@ -43,6 +43,8 @@ namespace elc {
 		const Date& getDate() const						{ return date; }
 		const int& getRoundType() const				{ return roundType;  }
 
+		Citizen* findCitizen(int id);
+		//const Citizen& getCitizen(const int& id)	   { return citizens.getCitizen(id); }
 		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
 		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
 		const DistrictsList& getDistList() const	   { return districts; }
@@ -64,7 +66,6 @@ namespace elc {
 		//void addCitizen(const char* name, int id, int yob);
 
 		//void AddNewDistToParties(int);
-		Citizen* findCitizen(int id);
 		//bool isPartiesEmpty() { return parties.isEmpty(); }
 		
 		void printCitizens();
@@ -86,8 +87,6 @@ namespace elc {
 
 		/**************************serialiazion***************************/
 		void fixLoadOfDistricts();
-
-
 		void save(ofstream& out) const;
 		void load(ifstream& in) ;
 

@@ -24,6 +24,7 @@ namespace elc {
 		void setCitizen(const string name, int id, int yob, const District& district);
 
 		Citizen* const getCitizen(int id) const;
+		//const Citizen& const getCitizen(int id) const;
 		const vector<Citizen> getList() const;
 
 		bool removeCitizen(const Citizen&);

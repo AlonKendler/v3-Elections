@@ -12,7 +12,7 @@ namespace elc {
 		}
 		catch (std::exception& ex) {
 			cout << "Error: " << ex.what() << endl;
-			throw;
+			throw(invalid_argument("Citzen object not added, procced"));
 		}
 		districts.setCitizenInDist(citizens.getList().back(), dist); //we just push_back a citizen to citizen list, so we get it.
 	}
@@ -122,8 +122,8 @@ namespace elc {
 				date.save(out);
 				districts.save(out); 
 				citizens.save(out);
-				//parties.save(out);
-				voting.save(out);
+				parties.save(out);
+				//voting.save(out);
 
 		}
 
@@ -135,8 +135,8 @@ namespace elc {
 			districts.load(in);
 			citizens.load(in, districts);
 			fixLoadOfDistricts();			//handle districts, assings proper citizens
-			//parties.load(in, citizens);
-			voting.load(in);
+			parties.load(in, citizens);
+			//voting.load(in);
 		}
 
 		void Elections::fixLoadOfDistricts()

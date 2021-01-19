@@ -62,9 +62,9 @@ namespace elc
 	{
 		bool type = false;
 		int size = list.size();
-		int capacity = list.capacity();
 
-		out.write(rcastcc(&capacity), sizeof(capacity));
+		//int capacity = list.capacity();
+		//out.write(rcastcc(&capacity), sizeof(capacity));
 		out.write(rcastcc(&size), sizeof(size));
 		for (auto itr : list)
 		{
@@ -78,11 +78,11 @@ namespace elc
 	{
 		bool type = false;
 		int size;
-		int capacity;
-		in.read(rcastc(&capacity), sizeof(capacity));
+		//int capacity;
+		//in.read(rcastc(&capacity), sizeof(capacity));
 		in.read(rcastc(&size), sizeof(size));
 	
-		list = vector<District*>(capacity);
+		list = vector<District*>(size);
 		for (int i = 0; i < size; ++i)
 		{
 			in.read(rcastc(&type), sizeof(type));
