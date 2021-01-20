@@ -37,7 +37,7 @@ namespace elc {
 		out
 			<< "Party name: " << other.partyName << " | "
 			<< "party number: " << other.partyID << " | "
-			<< "Party boss-> " << "boss name" << endl;
+			<< "Party boss-> " << other.getBoss().getName() << endl;
 		
 		vector< vector<Representative> >::iterator row;	//similar to i-j for loop
 		vector<Representative>::iterator col;			//with iterators

@@ -44,7 +44,7 @@ namespace elc {
 		const int& getRoundType() const				{ return roundType;  }
 
 		Citizen* getCitizenPtr(int id)				   { return citizens.getCitizenPtr(id); }
-		const Citizen& getCitizen(const int& id)	   { return citizens.getCitizen(id); }
+		 District* getDistrictPtr(const int& distID) { return districts.getDistrictPtr(distID); }
 		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
 		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
 		const DistrictsList& getDistList() const	   { return districts; }

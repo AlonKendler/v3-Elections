@@ -28,7 +28,10 @@ namespace  elc {
 
 		bool setCitizenInDist(const  Citizen&, const District& dist);
 
-		const District& getDistrict(const int& distID) const { return *(list[distID]); }
+		District* getDistrictPtr(const int& distID) const;
+		const District& getDistrict(const int& distID) const;
+
+
 		District& getDistrict(int distID, bool flag) const { return *(list[distID]); }
 		vector<District*> const getList() const { return list; }
 

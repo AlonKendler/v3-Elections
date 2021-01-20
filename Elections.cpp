@@ -14,13 +14,11 @@ namespace elc {
 			cout << "Error: " << ex.what() << endl;
 			throw(invalid_argument("Citzen object not added, procced"));
 		}
-		districts.setCitizenInDist(citizens.getList().back(), dist); //we just push_back a citizen to citizen list, so we get it.
+		districts.setCitizenInDist(*citizens.getList().back(), dist); //we just push_back a citizen to citizen list, so we get it.
 	}
 
 	void Elections::addParty(string name, const Citizen& boss)
 	{
-		//cout << boss;
-		//handle errors? if boss -last
 		try {
 			parties.setParty(name, boss, districts.getList().size());
 		}
@@ -146,8 +144,8 @@ namespace elc {
 			int id;
 			for (int i = 0; i < idx; i++)
 			{
-				id = citizens.getList()[i].getDistrict().getDistID();
-				districts.setCitizenInDist(citizens.getList()[i], getDistrict(id));
+				id = citizens.getList()[i]->getDistrict().getDistID();
+				districts.setCitizenInDist(*citizens.getList()[i], getDistrict(id));
 			}
 		}
 

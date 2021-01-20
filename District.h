@@ -43,14 +43,7 @@ namespace elc
 			//*this = o;
 		}
 
-		virtual ~District() 
-		{ 
-			cout << "Dist dtor:" << name << endl; 
-			for (auto itr : citizens) //citizens is a pointer vector, we delete manualy
-			{
-				delete itr;
-			}
-		}
+		virtual ~District() {}
 
 		//--Setters--//
 		void  setDistName(const string _n)			{ name = _n; }

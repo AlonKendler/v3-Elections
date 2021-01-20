@@ -207,21 +207,12 @@ void addDistric(Elections& e)
 	std::cout << "enter name of district:" << endl;
 	cin.ignore();
 	cin >> name;
-	//cin.getline(name, MAX_SIZE);
 	std::cout << "enter number of representitves:" << endl; cin >> num;
 	std::cout << "enter type of district: (0 - normal, 1 - diveded):" << endl; cin >> type;
 
-	//============= for shemsh
-	//Divided* newDist = new Divided(name, num);
-	//e.addDistrict(newDist);
-	//================
+	//need to handle error: exsisting name
+		e.addDistrict(name, num, type); 
 
-		e.addDistrict(name, num, type); // //e.addDistrict(newDist);
-
-	//if (!e.isPartiesEmpty())							//think! how to change these rows 
-	//{													//think! how to change these rows 
-	//	e.AddNewDistToParties(e.getDistrictsLength());	//think! how to change these rows 
-	//}
 	std::cout << "all good, passed input" << endl;
 }
 
@@ -238,6 +229,8 @@ void addCitizen(Elections& e)
 {
 	string name, idStr;
 	int id, yob, distID;
+	District * temp;
+	bool flag = true;
 	std::cout << "enter name" << endl;			cin >> name;
 	std::cout << "enter id" << endl;			cin >> idStr;
 	while (!(std::all_of(idStr.begin(), idStr.end(), ::isdigit)) || idStr.size()!=9)
@@ -253,16 +246,25 @@ void addCitizen(Elections& e)
 		cout << "age smaller than 18, compared to election date:"
 			<< e.getDate() << endl <<  " enter year of birth: "; cin >> yob;
 	}
-
 	//Handle simple round
 	try {
 
 		if (!e.getRoundType())
 		{
-			std::cout << "enter district from avilable: ";
-			e.printDistrictsNameAndID(); std::cout << endl;
-			cin >> distID;
-			e.addCitizen(name, id, e.getDistrict(distID), yob);
+			while (flag)
+			{
+				std::cout << "enter district from avilable: ";
+				e.printDistrictsNameAndID(); std::cout << endl;
+				cin >> distID;
+				try {
+					temp = e.getDistrictPtr(distID);
+					e.addCitizen(name, id, *temp, yob);
+					flag = false;
+				}
+				catch (out_of_range& ex) {
+					cout << ex.what() << endl;
+				}
+			}
 		}
 		else // if simple, we want to pass add citizen function without district
 		{
@@ -287,27 +289,19 @@ void addParty(Elections& e)
 		std::cout << "enter id of president" << endl;			cin >> id;
 
 		try {
-
-			//temp = e.getCitizen(id);
-			//if(tem)
-
-			e.addParty(name, e.getCitizen(id)); //party ctor throws
+			temp = e.getCitizenPtr(id);
+			if (temp == nullptr)
+			{
+				throw (invalid_argument("ID did not match to an existing citizen."));
+			}
+			
+			e.addParty(name, *temp); //party ctor throws
 			flag = true; //success, break loop
 		}
 		catch (exception& ex) {
 			cout << ex.what() << endl;
 		}
 	}
-
-
-	//while (temp == nullptr)
-	//{
-	//	std::cout << "id did not match to an existing citizen." << endl
-	//		<< "please enter a valid id: " << endl;
-	//	cin >> id;
-	//	temp = e.findCitizen(id);
-	//}
-	//e.addParty(name, *temp);
 	std::cout << "all good, passed input" << endl;
 }
 

@@ -23,6 +23,21 @@ namespace elc
 		list.push_back(_dist);
 	}
 
+	District* DistrictsList::getDistrictPtr(const int& distID) const
+	{
+		if (distID < 0 || distID >= static_cast<int> (list.size()))
+		{
+			throw(out_of_range("invalid District ID, choose ID from avilable."));
+		}
+		return (list[distID]);
+	}
+
+	const District& DistrictsList::getDistrict(const int& distID) const
+	{
+		return(*getDistrictPtr(distID));
+	}
+
+
 	bool DistrictsList::setCitizenInDist(const Citizen& resident, const District& dist)
 	{
 		//need to check if distID equals their index, should work

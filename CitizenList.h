@@ -13,21 +13,25 @@ namespace elc {
 	class CitizensList
 	{
 	private:
-		vector<Citizen> list;
+		vector<Citizen*> list;
 	
 	public:
 		CitizensList ()  {}
-		~CitizensList()  {}
+		~CitizensList()  
+		{
+			for (auto itr : list)
+				delete itr;
+		}
 		CitizensList(const CitizensList& other) { list = other.list; }
 
-		void setCitizen(const Citizen&);
+		void setCitizen(Citizen*);
 		void setCitizen(const string name, int id, int yob, const District& district);
 
 		Citizen* const getCitizenPtr(int id) const;
-		const Citizen&  getCitizen(int id) const;
-		const vector<Citizen> getList() const;
+	//	const Citizen&  getCitizen(int id) const;
+		const vector<Citizen*> getList() const;
 
-		bool removeCitizen(const Citizen&);
+		//bool removeCitizen(const Citizen&);
 
 		friend void swap(CitizensList& first, CitizensList& second);
 		CitizensList& operator=(CitizensList other);

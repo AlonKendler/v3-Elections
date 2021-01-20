@@ -83,7 +83,7 @@ namespace elc {
 
 			//BUGGED!
 			//boss = (_list.getCitizen(id));
-			boss = &_list.getCitizen(id);
+			boss = _list.getCitizenPtr(id);
 
 			//	in.read(rcastc(&elec_size), sizeof(elec_size));
 			//	in.read(rcastc(&elec_length), sizeof(elec_length));
