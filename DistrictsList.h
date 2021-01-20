@@ -15,8 +15,12 @@ namespace  elc {
 
 	public:
 		DistrictsList()  {}
-		~DistrictsList() {}
 		DistrictsList(const DistrictsList& other) { list = other.list;  }
+		~DistrictsList() 
+		{
+			for (auto itr : list)
+				delete itr;
+		}
 
 		
 		void setDistrict(string _DistrictName, int numOfReps, bool div);

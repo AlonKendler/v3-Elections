@@ -43,7 +43,14 @@ namespace elc
 			//*this = o;
 		}
 
-		virtual ~District() { cout << "Dist dtor:" << name << endl; }
+		virtual ~District() 
+		{ 
+			cout << "Dist dtor:" << name << endl; 
+			for (auto itr : citizens) //citizens is a pointer vector, we delete manualy
+			{
+				delete itr;
+			}
+		}
 
 		//--Setters--//
 		void  setDistName(const string _n)			{ name = _n; }
@@ -120,7 +127,7 @@ namespace elc
 		Divided() : District() {} 
 		Divided(string _name, int _numOfReps, int id) : District(_name, _numOfReps, id) {}
 		Divided(const Divided& o) : District(o) {}
-		virtual ~Divided() {};
+		virtual ~Divided() {}; //no need, Dtor of district handles itself
 
 		const Divided& operator=(const Divided& o)
 		{

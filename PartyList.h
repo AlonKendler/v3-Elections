@@ -17,8 +17,12 @@ namespace  elc {
 
 	public:
 		PartyList()  {}
-		~PartyList() {}
 		PartyList(const PartyList& other) { list = other.list;  }
+		~PartyList()
+		{
+			for (auto itr : list)
+				delete itr;
+		}
 
 
 		void setParty(string _partyName, const Citizen& boss, int numOfDistricts);

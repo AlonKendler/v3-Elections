@@ -5,16 +5,24 @@ namespace elc
 	
 	void PartyList::setParty(string _partyName, const Citizen& boss, int numOfDistricts)
 	{
+		for (auto itr : list)
+		{
+			if (itr->getPartyName() == _partyName)
+			{
+				throw(invalid_argument("Party name alredy exist, party was not added"));
+			}
+			if (&itr->getBoss() == &boss) //comapre adress of poiters?
+			{
+				throw(invalid_argument("citizen can represent only one party"));
+			}
+		}
 		Party* temp = new Party(_partyName, boss, list.size());
-		//no use of numOfDistricts
-		//handle errors here??
 		setParty(temp);
 
 	}
 
 	void PartyList::setParty(Party* _party)
 	{
-		//check if pary name exist, handle error
 		list.push_back(_party);
 	}
 

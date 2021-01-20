@@ -278,18 +278,36 @@ void addParty(Elections& e)
 {
 	string name;
 	int id;
+	bool flag = false;
 	const Citizen* temp;
-	std::cout << "enter name of the party:" << endl;		cin >> name;
-	std::cout << "enter id of president" << endl;			cin >> id;
-	temp = e.findCitizen(id);
-	while (temp == nullptr)
+
+	while (!flag)
 	{
-		std::cout << "id did not match to an existing citizen." << endl
-			<< "please enter a valid id: " << endl;
-		cin >> id;
-		temp = e.findCitizen(id);
+		std::cout << "enter name of the party:" << endl;		cin >> name;
+		std::cout << "enter id of president" << endl;			cin >> id;
+
+		try {
+
+			//temp = e.getCitizen(id);
+			//if(tem)
+
+			e.addParty(name, e.getCitizen(id)); //party ctor throws
+			flag = true; //success, break loop
+		}
+		catch (exception& ex) {
+			cout << ex.what() << endl;
+		}
 	}
-	e.addParty(name, *temp);
+
+
+	//while (temp == nullptr)
+	//{
+	//	std::cout << "id did not match to an existing citizen." << endl
+	//		<< "please enter a valid id: " << endl;
+	//	cin >> id;
+	//	temp = e.findCitizen(id);
+	//}
+	//e.addParty(name, *temp);
 	std::cout << "all good, passed input" << endl;
 }
 
@@ -299,13 +317,13 @@ void addPartyCandidates(Elections& e)
 	const Citizen* temp;
 	std::cout << "please enter the ID of the Candidate" << endl;
 	cin >> id;
-	temp = e.findCitizen(id);
+	temp = e.getCitizenPtr(id);
 	while (temp == nullptr)
 	{
 		std::cout << "id did not match to an existing citizen." << endl
 			<< "please enter a valid id: " << endl;
 		cin >> id;
-		temp = e.findCitizen(id);
+		temp = e.getCitizenPtr(id);
 	}
 	std::cout << "enter Party from avilable: ";
 	e.printPartiesNameAndID(); std::cout << endl;
@@ -335,13 +353,13 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 		std::cout << "Welcome to voting proccess!" << endl
 			<< "Please enter ID to vote." << endl;
 		cin >> id;
-		temp = e.findCitizen(id);
+		temp = e.getCitizenPtr(id);
 		while (temp == nullptr)
 		{
 			system("CLS");
 			std::cout << "ID was not found, please enter Valid ID" << endl;
 			cin >> id;
-			temp = e.findCitizen(id);
+			temp = e.getCitizenPtr(id);
 		}
 		if (temp->getVote())
 		{

@@ -19,7 +19,15 @@ namespace elc {
 
 	void Elections::addParty(string name, const Citizen& boss)
 	{
-		parties.setParty(name, boss, districts.getList().size());
+		//cout << boss;
+		//handle errors? if boss -last
+		try {
+			parties.setParty(name, boss, districts.getList().size());
+		}
+		catch (std::exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+			throw(invalid_argument("Party object not added, procced"));
+		}
 	}
 	void Elections::addDistrict(string name, int num, bool div)
 	{
@@ -49,13 +57,6 @@ namespace elc {
 	//	parties.AddNewDistToParties(distID);
 	//}
 
-	Citizen* Elections::findCitizen(int id)
-	{
-		//citizens.CitizenSort();
-		return (citizens.getCitizen(id));
-		//if ID doesn't exist in the database,
-		//the return value will be nullptr
-	}
 
 
 	void Elections::printCitizens() 
