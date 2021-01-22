@@ -80,10 +80,10 @@ namespace elc
 	{
 		int size;
 		in.read(rcastc(&size), sizeof(size));
-
 		list =  vector<Citizen*>(size);
 		for (int i = 0; i < size; i++)
 		{
+			list[i] = new Citizen();
 			list[i]->load(in, _list);
 		}
 	}

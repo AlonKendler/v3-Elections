@@ -76,42 +76,61 @@ namespace elc {
 		out.write(rcastcc(&partyID), sizeof(partyID));
 		out.write(rcastcc(&bs), sizeof(bs));
 	
-		//add repsLisst save
-		//add repsLisst save
-		//add repsLisst save
-		//add repsLisst save
-		//add repsLisst save
-		//add repsLisst save
-	
+
+		//seralization of repsList
+
+		int rowsSize = RepsList.size();
+		int colsSize;
+
+		out.write(rcastcc(&rowsSize), sizeof(rowsSize));
+
+		for (auto itrI : RepsList)
+		{
+			colsSize = itrI.size();
+			out.write(rcastcc(&colsSize), sizeof(colsSize));
+
+			for (auto itrJ : itrI)
+			{
+				itrJ.save(out);
+			}
+		}	
 	}
 	
-	//void elc::Party::load(std::ifstream& in, const CitizensList& _list)
-	//{
-	//	int len, id;
-	//	in.read(rcastc(&len), sizeof(len));
-	//	char* _name;
-	//	try {
-	//		_name = new char[len + 1];
-	//	}
-	//	catch (bad_alloc& ex) {
-	//		cout << ex.what() << endl; exit(1);
-	//	}
-	//	in.read(_name, len);
-	//	_name[len] = '\0';		 //notice, we assign string to char*
-	//	partyName = _name;		 //then, assign it to the string name
-	//	delete[] _name; 		 //at last, delete the temporary char* 
-	//
-	//	in.read(rcastc(&partyID), sizeof(partyID));
-	//	in.read(rcastc(&id), sizeof(id)); //reads boss id;
-	//
-	//	//boss = (_list.getCitizen(id));
-	//	boss =_list.getCitizen(id);
-	//
-	////	in.read(rcastc(&elec_size), sizeof(elec_size));
-	////	in.read(rcastc(&elec_length), sizeof(elec_length));
-	////
-	////	electors = new Elector[elec_size];
-	////	for (int i = 0; i < elec_length; i++)
-	////		electors[i].load(in, _list);
-	//}
+	void Party::load(ifstream& in, const CitizensList& _list)
+	{
+		int len, id;
+		in.read(rcastc(&len), sizeof(len));
+		char* _name;
+		try {
+			_name = new char[len + 1];
+		}
+		catch (bad_alloc& ex) {
+			cout << ex.what() << endl; exit(1);
+		}
+		in.read(_name, len);
+		_name[len] = '\0';		 //notice, we assign string to char*
+		partyName = _name;		 //then, assign it to the string name
+		delete[] _name; 		 //at last, delete the temporary char* 
+
+		in.read(rcastc(&partyID), sizeof(partyID));
+		in.read(rcastc(&id), sizeof(id)); //reads boss id;
+		boss = _list.getCitizenPtr(id);
+
+		//seralization of repsList
+		int rowsSize, colsSize;
+		Representative temp;
+		in.read(rcastc(&rowsSize), sizeof(rowsSize));
+		
+		RepsList = vector<vector<Representative>>(rowsSize);
+
+		for (int i=0; i< rowsSize; i++)
+		{
+			in.read(rcastc(&colsSize), sizeof(colsSize));
+			for (int j = 0; j < colsSize; j++)
+			{
+				temp.load(in, _list); //load one represative
+				RepsList[i].push_back(temp); //push temp elemnt and (copy it).
+			}
+		}
+	}
 }

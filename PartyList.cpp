@@ -97,9 +97,11 @@ namespace elc
 		int size;
 		in.read(rcastc(&size), sizeof(size));
 		list = vector<Party*>(size);
-		for(auto itr : list)
+		//for(auto itr : list) allocates memory to itr, not to object?!
+		for(int i=0; i< size; i++)
 		{
-			itr->load(in, _list);
+			list[i] = new Party();
+			list[i]->load(in, _list);
 		}
 	}
 }

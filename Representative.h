@@ -1,12 +1,14 @@
 #pragma once
 #include <iostream>
 #include "Citizen.h"
+#include "CitizenList.h"
 
 using namespace std;
 
 namespace elc
 {
 	class Citizen;
+	//class citizensList;
 	class Representative
 	{
 	private:
@@ -38,6 +40,22 @@ namespace elc
 		{
 			out << *other.rep << endl;;
 			return out;
+		}
+
+		void save(ofstream& out) const 
+		{
+			int citizenID = rep->getID();
+			out.write(rcastcc(&ID), sizeof(ID));
+			out.write(rcastcc(&citizenID), sizeof(citizenID));
+		}
+
+
+		void load(ifstream& in, const CitizensList& _list)
+		{
+			int citizenID;
+			in.read(rcastc(&ID), sizeof(ID));
+			in.read(rcastc(&citizenID), sizeof(citizenID));
+			rep = _list.getCitizenPtr(citizenID);
 		}
 	};
 }

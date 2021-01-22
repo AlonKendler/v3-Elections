@@ -7,9 +7,9 @@
 #include "CitizenList.h"
 
 using namespace std;
-class CitizensList;
 
 namespace elc {
+class CitizensList;
 
 	
 	class Party {
@@ -21,6 +21,8 @@ namespace elc {
 
 	public:
 
+
+		Party() = default;
 		Party(string _partyName, const Citizen& _boss, int _id)
 			: partyName(_partyName), partyID(_id), boss(&_boss), RepsList() {}
 
@@ -58,40 +60,8 @@ namespace elc {
 		void printNameAndId() const;
 
 		void save(ofstream& out) const;
-		
+		void load(ifstream& in, const CitizensList& _list);
 
-		//Shemesh, try to pass this to party.cpp, its fucking anoying
-		void load(ifstream& in, const CitizensList& _list)
-		{
-			int len, id;
-			in.read(rcastc(&len), sizeof(len));
-			char* _name;
-			try {
-				_name = new char[len + 1];
-			}
-			catch (bad_alloc& ex) {
-				cout << ex.what() << endl; exit(1);
-			}
-			in.read(_name, len);
-			_name[len] = '\0';		 //notice, we assign string to char*
-			partyName = _name;		 //then, assign it to the string name
-			delete[] _name; 		 //at last, delete the temporary char* 
-
-			in.read(rcastc(&partyID), sizeof(partyID));
-			in.read(rcastc(&id), sizeof(id)); //reads boss id;
-
-
-			//BUGGED!
-			//boss = (_list.getCitizen(id));
-			boss = _list.getCitizenPtr(id);
-
-			//	in.read(rcastc(&elec_size), sizeof(elec_size));
-			//	in.read(rcastc(&elec_length), sizeof(elec_length));
-			//
-			//	electors = new Elector[elec_size];
-			//	for (int i = 0; i < elec_length; i++)
-			//		electors[i].load(in, _list);
-		}
 	};
 
 };
