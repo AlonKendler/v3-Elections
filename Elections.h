@@ -49,11 +49,12 @@ namespace elc {
 		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
 		const DistrictsList& getDistList() const	   { return districts; }
 		const CitizensList& getCitizensList() const    { return citizens; }
+		const PartyList& getPartyList() const		{ return parties; }
     
 		void setDate(const Date& _date)					{ date = _date; }
 		void setRoundType(int _type)				{ roundType = _type; }
 
-		//const Party* getParty(const int& partyID) const { return parties.getParty(partyID); }
+		Party* getParty(const int& partyID) { return (parties.getParty(partyID)); }
 		//const Citizen& getCitizen(const int& id) { return *citizens.getCitizen(id); }
 
 		void addCitizen(string name, int id, const District& dist, int yob);
@@ -83,7 +84,7 @@ namespace elc {
 		bool setVote(Citizen& voter, const int& partyID) { return voting.setVote(voter, partyID); }
 		const Votes& getVotes() { return voting; }
 
-		//void setResults();
+		void setResults();
 
 		/**************************serialiazion***************************/
 		void fixLoadOfDistricts();

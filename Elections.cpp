@@ -92,26 +92,26 @@ namespace elc {
 
 	void Elections::StartVotingProccess()
 	{
-		voting.setnumOfDistricts(districts.getList().size());
-		voting.setnumOfParties(parties.getList().size());
+		int numOfDistricts = districts.getList().size();
+		int numOfParties = parties.getList().size();
 
-		voting.setVotes_table();
-		voting.setElectors_table();
+		voting.setVotes_table(numOfDistricts, numOfParties);
+		voting.setElectors_table(numOfDistricts, numOfParties);
 	}
 
-	//void Elections::setResults()
-	//{
-	//	if (voting.isCalcsDone())
-	//		return;
-	//
-	//	bool flag = true;
-	//	for (int i = 0; i < getDistrictsLength(); i++)
-	//	{
-	//		districts.getDistrict(i, flag).initRepsList(parties.getLength(), parties.getPartyList());
-	//		voting.setElectorsInDist(parties, getDistrict(i, flag));
-	//	}
-	//	voting.finishCalcs();
-	//}
+	void Elections::setResults()
+	{
+		if (voting.isCalcsDone())
+			return;
+		int partiesSize = parties.getSize();
+		bool flag = true;
+		for (int i = 0; i < getDistrictsLength(); i++)
+		{
+			districts.getDistrict(i, flag).initRepsList(partiesSize /*,parties.getPartyList()*/);
+			voting.setElectorsInDist(parties, getDistrict(i, flag));
+		}
+		voting.finishCalcs();
+	}
 
 	/**************************serialiazion***************************/
 		void Elections::save(ofstream& out) const

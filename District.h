@@ -46,7 +46,7 @@ namespace elc
 		virtual ~District() {}
 
 		//--Setters--//
-		void  setDistName(const string _n)			{ name = _n; }
+		void setDistName(const string _n)			{ name = _n; }
 		void setDistID(const int& _id)				{ distID = _id; }
 		void setnumOfReps(const int& _t)			{ numOfReps = _t; }
 		bool setVotersPercentage(int& allCitizens);
@@ -54,6 +54,8 @@ namespace elc
 		void setDistCitizenInList(const Citizen&);
 
 		//seters of repsList
+		void addPartyRepToList(const int& partyID, const Representative& rep);
+		void addPartyRepToList(const int& partyID, const Citizen& rep);
 
 		//--Getters--//
 
@@ -66,6 +68,7 @@ namespace elc
 
 		const vector<Citizen*>& GetDistCitizens() const { return citizens; }
 		const vector<Representative>& getRepsFromParty(const int partyID) const { return RepsList[partyID]; }
+		void printPartyRepsNames(const int& partyID)const;
 
 
 

@@ -17,7 +17,8 @@ namespace elc {
 
 	void Party::addRepresentative(const Citizen& rep, int distID)
 	{
-
+		//why rep with distID???????
+		//possible future bugs
 		RepsList.at(distID).push_back(Representative(rep, distID));
 	}
 

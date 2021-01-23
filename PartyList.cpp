@@ -26,14 +26,14 @@ namespace elc
 		list.push_back(_party);
 	}
 
-//	Party* PartyList::getParty(int partyID)  {
-//		auto it = find_if(list.begin(), list.end(), [partyID](Party& obj) {return obj.getpartyID() == partyID; });
-//
-//		if (it != list.end())
-//		{
-//			return *it; //return the pointer of the element in terator?
-//		}
-//	}
+	Party* PartyList::getParty(int partyID)  {
+		auto it = find_if(list.begin(), list.end(), [partyID](Party* obj) {return obj->getpartyID() == partyID; });
+
+		if (it != list.end())
+		{
+			return *it; //return the pointer of the element in terator?
+		}
+	}
 
 	//const string const PartyList::getPartyName(const int& partyID) const
 	//{

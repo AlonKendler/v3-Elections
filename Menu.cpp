@@ -21,8 +21,8 @@ void addCitizen(Elections& e);
 void addParty(Elections& e);
 void addPartyCandidates(Elections& e);
 
-//void results(Elections& e);
-//void simpleResults(Elections& e);
+void results(Elections& e);
+void simpleResults(Elections& e);
 void openVotingMenu(Elections& e, bool& doneVoting);
 bool handleErrors(int ctrl, Elections& e);
 
@@ -147,7 +147,7 @@ void mainMenu(Elections& e, bool& doneVoting)
 		case 6: {e.printCitizens(); break; }
 		case 7: {e.printParties(); break; }
 		case 8: {if (!doneVoting) openVotingMenu(e, doneVoting); break; }
-		case 9: {if (doneVoting) { /*results(e)*/cout<<"results..."<<endl; }; break; }
+		case 9: {if (doneVoting) { results(e);  cout << "results..." << endl; }; break; }
 		case 10: { done = true; break; }
 		case 11: { save(e, doneVoting); break; }
 		case 12: { load(&e, doneVoting) ; break; }
@@ -208,7 +208,7 @@ void addDistric(Elections& e)
 	cin.ignore();
 	cin >> name;
 	std::cout << "enter number of representitves:" << endl; cin >> num;
-	std::cout << "enter type of district: (0 - normal, 1 - diveded):" << endl; cin >> type;
+	std::cout << "enter type of district: (0 - normal, 1 - divided):" << endl; cin >> type;
 
 	//need to handle error: exsisting name
 		e.addDistrict(name, num, type); 
@@ -379,7 +379,7 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 	return;
 }
 
-/*
+
 void results(Elections& e)
 {
 	e.setResults();
@@ -391,17 +391,13 @@ void results(Elections& e)
 	}
 
 
-	int winnerIdDist, winner;
+	int winnerIdDist;
 	int party_id, numOfReps;
 	int numOfDistricts = e.getDistrictsLength(), numOfParties = e.getPartiesLength();
-	int** party_order = e.getVotes().getPartiesWinningOrder();
+	vector<pair<Party&, int>> party_order = e.getVotes().getSortedElectorResults(e.getPartyList());
 	string partyName;
 	const District* dist;
 
-
-
-
-	winner = e.getVotes().getWinner(e.getDistList());
 
 	cout << "for Elections " << e.getDate() << ", The elections results are as follow: " << endl << endl;
 
@@ -409,7 +405,7 @@ void results(Elections& e)
 	{
 		dist = &e.getDistrict(i);
 		winnerIdDist = e.getVotes().getWinnerIDInDist(i);
-		partyName = e.getParty(winnerIdDist).getPartyName();
+		partyName = e.getParty(winnerIdDist)->getPartyName();
 		numOfReps = e.getDistrict(i).getDistReps();
 		std::cout << " --- In District " << dist->getDistName() << " --- " << endl
 			<< "number of representative in the district: " << numOfReps << endl;
@@ -418,13 +414,13 @@ void results(Elections& e)
 			cout << "District "<< dist->getDistName() << " is a divided district" << endl << endl;
 			for (int j = numOfParties-1; j >= 0; j--)
 			{
-				party_id = party_order[j][0];
-				partyName = e.getParty(party_id).getPartyName();
+				party_id = party_order[j].first.getpartyID();
+				partyName = party_order[j].first.getPartyName();
 				numOfReps = e.getVotes().getElectorsforPartyInDist(party_id, i);
 
 				if (numOfReps > 0)
 				{
-					cout << numOfReps << " Electors from the district choose " << e.getParty(j).getBossID().getName()
+					cout << numOfReps << " Electors from the district choose " << e.getParty(j)->getBoss().getName()
 						<< ", of party " << partyName << endl;
 				}
 				else
@@ -440,8 +436,8 @@ void results(Elections& e)
 
 		for (int j = numOfParties-1; j >= 0; j--)
 		{
-			party_id = party_order[j][0];
-			partyName = e.getParty(party_id).getPartyName();
+			party_id = party_order[j].first.getpartyID();
+			partyName = party_order[j].first.getPartyName();
 			numOfReps = e.getVotes().getElectorsforPartyInDist(party_id, i);
 
 			cout << "  - For party " << partyName << " -" << endl
@@ -451,7 +447,7 @@ void results(Elections& e)
 			if (numOfReps > 0)
 			{
 				cout << "party representatives: " << endl;
-				e.getDistrict(i).getRepsFromParty(party_id).printsenatorsList(numOfReps);
+				e.getDistrict(i).printPartyRepsNames(party_id);
 			}
 			cout << endl << endl;
 		}
@@ -461,13 +457,14 @@ void results(Elections& e)
 	cout << " -- Election results for each party --  " << endl << endl;
 	for (int i = numOfParties - 1; i >= 0; i--)
 	{
-		party_id = party_order[i][0];
-		partyName = e.getParty(party_id).getPartyName();
+		party_id = party_order[i].first.getpartyID();
+		partyName = e.getParty(party_id)->getPartyName();
+		int partyVotes = e.getVotes().getTotalPartyVotes(party_id);
 
 		cout << "  - For party " << partyName << " - " << endl
-			<< "Party candidate for prime minister: " << e.getParty(party_id).getBossID().getName() << endl
-			<< "Total party electors won: " << party_order[i][2] << endl
-			<< "Total party votes: " << party_order[i][1] << endl << endl;
+			<< "Party candidate for prime minister: " << e.getParty(party_id)->getBoss().getName() << endl
+			<< "Total party electors won: " << party_order[i].second << endl
+			<< "Total party votes: " << partyVotes << endl << endl;
 	}
 	return;
 
@@ -477,8 +474,8 @@ void results(Elections& e)
 void simpleResults(Elections& e)
 {
 	const CitizensList& citizens = e.getCitizensList();
-	int i, numOfReps, party_id, numOfParties = e.getPartiesLength();
-	int** party_order = e.getVotes().getPartiesWinningOrder();
+	int i, numOfReps, party_id, partyVotes, numOfParties = e.getPartiesLength();
+	vector<pair<Party&, int>> party_order = e.getVotes().getSortedElectorResults(e.getPartyList());
 	string partyName;
 
 	cout << "for Elections " << e.getDate() << ", The elections results are as follow: " << endl << endl
@@ -486,31 +483,27 @@ void simpleResults(Elections& e)
 	
 	for (i = numOfParties-1; i >= 0; i--)
 	{
-		party_id = party_order[i][0];
-		partyName = e.getParty(party_id).getPartyName();
+		party_id = party_order[i].first.getpartyID();
+		partyName = e.getParty(party_id)->getPartyName();
 		numOfReps = e.getVotes().getElectorsforPartyInDist(party_id, 0);
+		partyVotes = e.getVotes().getTotalPartyVotes(party_id);
+		
 		cout << "  - For party " << partyName << "-" << endl
-			<< "party candidate for prime minister: " << e.getParty(party_id).getBossID().getName() << endl
-			<< "number of votes won: " << party_order[i][1] << endl
+			<< "party candidate for prime minister: " << e.getParty(party_id)->getBoss().getName() << endl
+			<< "number of votes won: " << partyVotes << endl
 			<< "precentage of votes: " << e.getVotes().getPartyVotesPrecentageInDist(party_id, 0) << "%" << endl
 			<< "number of representatives won: " << numOfReps << endl;
 			if (numOfReps > 0)
 			{
 				cout << "party representatives: " << endl;
-				e.getDistrict(0).getRepsFromParty(party_id).printsenatorsList(numOfReps);
+				e.getDistrict(0).printPartyRepsNames(party_id);
 			}
 		cout << endl << endl;
 
 	}
 	cout << endl;
-		
-
-
-	for (i = 0; i < numOfParties; i++)
-		delete[] party_order[i];
-	delete[] party_order;
 }
-*/
+
 
 bool handleErrors(int ctrl, Elections& e)
 {

@@ -22,6 +22,16 @@ namespace elc
 		citizens.push_back(const_cast<Citizen*>(&_citizen));
 	}
 
+	void District::addPartyRepToList(const int& partyID, const Representative& rep)
+	{
+		RepsList[partyID].push_back(rep);
+	}
+
+	void District::addPartyRepToList(const int& partyID, const Citizen& rep)
+	{
+		addPartyRepToList(partyID, Representative(rep, partyID));
+	}
+
 	bool District::initRepsList(const int& size /*, Party* list*/)
 	{
 		////RepsList.reserve(size+1);
@@ -44,6 +54,10 @@ namespace elc
 		//reps_lentgh = size;
 		//delete[] RepsList;
 		//RepsList = temp;
+		for (int i = 0; i < size; i++)
+		{
+			RepsList.push_back(vector<Representative>());
+		}
 		return true;
 	}
 
@@ -51,6 +65,15 @@ namespace elc
 	void District::printNameAndId()
 	{
 		cout << "(" << this->distID << " - " << this->name << ")";
+	}
+
+	void District::printPartyRepsNames(const int& partyID) const
+	{
+		for (auto itr = RepsList[partyID].begin(); itr != RepsList[partyID].end(); ++itr)
+		{
+			cout << itr->getRep().getName() << endl;
+		}
+		cout << endl;
 	}
 
 	std::ostream& operator<<(std::ostream& out, const District& other)

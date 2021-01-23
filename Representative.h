@@ -28,7 +28,7 @@ namespace elc
 		void setRep(Citizen& r) { rep = &r; }
 
 		const int& getID() { return ID; }
-		const Citizen& getRep() { return *rep; }
+		const Citizen& getRep() const { return *rep; } 
 
 
 		const Representative& operator=(const Representative& o)

@@ -28,9 +28,11 @@ namespace  elc {
 		void setParty(string _partyName, const Citizen& boss, int numOfDistricts);
 		void setParty(Party*);
 
-		//Party* getParty(int partyID) ;
+		Party* getParty(int partyID) ;
 		//string const getPartyName(const int& partyID) const;
+		const int& getSize() const { return list.size(); }
 		vector<Party*> const getList() const { return list; }
+		const Representative& getPartyRepInDist(const int& partyID, const int& DistID, const int& place) { return list[partyID]->getRepsFromDist(DistID).at(place); }
 
 		void updateRepsList(int districtsAmount);
 		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
