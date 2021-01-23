@@ -9,7 +9,6 @@
 #include "DistrictsList.h"
 
 
-
 using namespace std;
 namespace elc
 {
@@ -17,30 +16,26 @@ namespace elc
 	{
 	private:
 		bool after_calcs;
-		//holds in each cell the number of votes
-		vector<vector<int>> votes_table;
-
-		//holds in each cell the number of electors from each party
-		//in every district
-		vector<vector<int>> electors;
-
-		//table[districts][parties]
+		int numOfParties;
+		int numOfDistricts;
+		vector<vector<int>> votes_table; //holds in each cell the number of votes
+		vector<vector<int>> electors;	//holds in each cell the number of electors from each party
 
 	public:
-		Votes() :votes_table(), electors(),after_calcs(false) {}
+		Votes() :votes_table(), electors(),after_calcs(false), numOfParties(0), numOfDistricts(0) {}
 		Votes(int _numOfParties, int _numOfDistricts);
-		~Votes();
+		~Votes() {}
 
-		//void setnumOfParties(const int& num);
-		//void setnumOfDistricts(const int& num);
+		void setnumOfParties(const int& num) { numOfParties = num; }
+		void setnumOfDistricts(const int& num) { numOfDistricts = num; }
 		void setVotes_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties);
 		void setElectors_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties);
 		bool setVote(Citizen&, int PartyID);
-		void finishCalcs();
+		void setAfterCalcs(bool exp) { after_calcs = exp; }
 
-		const bool isCalcsDone();
-		//const int& getnumOfParties();
-		//const int& getnumOfDistricts();
+		const bool getAfterCalcs()		 { return after_calcs; }
+		const int& getnumOfParties()	 { return numOfParties;	}
+		const int& getnumOfDistricts()	 { return numOfDistricts; }
 		const int getTotalPartyVotes(const int& partyID)const;
 		const int getTotalVotesInDistrict(const int& DistID)const;
 		const int getPartyVotesInDist(const int& PartyID, const int& distID)const;

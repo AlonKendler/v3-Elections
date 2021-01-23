@@ -35,27 +35,8 @@ namespace elc {
 	void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)
 	{
 		parties.updateRepsList(districts.getList().size());
-		//checking repList
-		cout << "now, lets check this thing" << endl;
 		parties.addPartyCandidate(rep, partyID, distID);
 	}
-
-	//void Elections::addPartyCandidate(int id, int partyID, int distID)
-	//{
-	//	Citizen* temp = citizens.getCitizen(id);
-	//	parties.addRepInParty(*temp, partyID, distID);
-	//}
-	//void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)
-	//{
-	//	parties.addRepInParty(rep, partyID, distID);
-	//}
-
-	//void Elections::AddNewDistToParties(int distID)
-	//{
-	//	parties.AddNewDistToParties(distID);
-	//}
-
-
 
 	void Elections::printCitizens() 
 	{
@@ -68,9 +49,7 @@ namespace elc {
 	void Elections::printDistricts() 
 	{ 
 		if (roundType)
-		{
 			cout << "No distrricts available" << endl;
-		}
 		else
 			cout << districts; 
 	}
@@ -85,11 +64,6 @@ namespace elc {
 
 	/*********************** voting proccess *******************************/
 
-	//bool Elections::isEnoughRepsInDist(const int& distID, const int& partyID)
-	//{
-	//	return (parties.getParty(partyID).getElectorInDist(distID).getNumOfSenators() > districts.getTotalRepsInDist(distID));
-	//}
-
 	void Elections::StartVotingProccess()
 	{
 		int numOfDistricts = districts.getList().size();
@@ -101,16 +75,17 @@ namespace elc {
 
 	void Elections::setResults()
 	{
-		if (voting.isCalcsDone())
-			return;
-		int partiesSize = parties.getSize();
-		bool flag = true;
-		for (int i = 0; i < getDistrictsLength(); i++)
+		if (!voting.getAfterCalcs()) 
 		{
-			districts.getDistrict(i, flag).initRepsList(partiesSize /*,parties.getPartyList()*/);
-			voting.setElectorsInDist(parties, getDistrict(i, flag));
+			bool flag = true;
+			int partiesSize = getPartiesLength();
+			for (int i = 0; i < getDistrictsLength(); i++)
+			{
+				districts.getDistrict(i, flag).initRepsList(partiesSize);
+				voting.setElectorsInDist(parties, getDistrict(i, flag));
+			}
+			voting.setAfterCalcs(true);
 		}
-		voting.finishCalcs();
 	}
 
 	/**************************serialiazion***************************/
@@ -122,8 +97,7 @@ namespace elc {
 				districts.save(out); 
 				citizens.save(out);
 				parties.save(out);
-				//voting.save(out);
-
+				voting.save(out);
 		}
 
 		void Elections::load(ifstream& in)
@@ -135,7 +109,7 @@ namespace elc {
 			citizens.load(in, districts);
 			fixLoadOfDistricts();			//handle districts, assings proper citizens
 			parties.load(in, citizens);
-			//voting.load(in);
+			voting.load(in);
 		}
 
 		void Elections::fixLoadOfDistricts()

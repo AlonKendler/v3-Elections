@@ -16,7 +16,6 @@ namespace elc {
 	{
 	private:
 		int roundType; // 0 = normal, 1 = simple
-		//char* date;
 		Date date;
 		PartyList parties;
 		CitizensList citizens;
@@ -36,15 +35,16 @@ namespace elc {
 			districts.setDistrict(name, reps, true);
 		}
 
-		int getPartiesLength() const				{ return parties.getList().size(); }
-		int getCitizensLength() const				{ return citizens.getList().size(); }
-		int getDistrictsLength() const				{ return districts.getList().size(); }
+		int getPartiesLength() const				   { return parties.getList().size(); }
+		int getCitizensLength() const				   { return citizens.getList().size(); }
+		int getDistrictsLength() const				   { return districts.getList().size(); }
 
-		const Date& getDate() const						{ return date; }
-		const int& getRoundType() const				{ return roundType;  }
+		const Date& getDate() const					   { return date; }
+		const int& getRoundType() const				   { return roundType;  }
 
+		Party* getParty(const int& partyID)			   { return (parties.getParty(partyID)); }
 		Citizen* getCitizenPtr(int id)				   { return citizens.getCitizenPtr(id); }
-		 District* getDistrictPtr(const int& distID) { return districts.getDistrictPtr(distID); }
+		 District* getDistrictPtr(const int& distID)   { return districts.getDistrictPtr(distID); }
 		const District& getDistrict(const int& distID) { return districts.getDistrict(distID); }
 		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
 		const DistrictsList& getDistList() const	   { return districts; }
@@ -54,20 +54,10 @@ namespace elc {
 		void setDate(const Date& _date)					{ date = _date; }
 		void setRoundType(int _type)				{ roundType = _type; }
 
-		Party* getParty(const int& partyID) { return (parties.getParty(partyID)); }
-		//const Citizen& getCitizen(const int& id) { return *citizens.getCitizen(id); }
-
 		void addCitizen(string name, int id, const District& dist, int yob);
 		void addParty(string name, const Citizen& boss);
 		void addDistrict(string name, int num, bool div);
-		//void addPartyCandidate(int id, int partyID, int distID);
 		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
-
-		//versions for simple round
-		//void addCitizen(const char* name, int id, int yob);
-
-		//void AddNewDistToParties(int);
-		//bool isPartiesEmpty() { return parties.isEmpty(); }
 		
 		void printCitizens();
 		void printParties();
@@ -76,14 +66,10 @@ namespace elc {
 		void printPartiesNameAndID();
 
 
-		/*********************** voting proccess *******************************/
-
-		//bool isEnoughRepsInDist(const int& distID, const int& partyID);
-
+		/*********************** voting proccess ***************************/
 		void StartVotingProccess();
 		bool setVote(Citizen& voter, const int& partyID) { return voting.setVote(voter, partyID); }
 		const Votes& getVotes() { return voting; }
-
 		void setResults();
 
 		/**************************serialiazion***************************/

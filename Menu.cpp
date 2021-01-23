@@ -147,7 +147,7 @@ void mainMenu(Elections& e, bool& doneVoting)
 		case 6: {e.printCitizens(); break; }
 		case 7: {e.printParties(); break; }
 		case 8: {if (!doneVoting) openVotingMenu(e, doneVoting); break; }
-		case 9: {if (doneVoting) { results(e);  cout << "results..." << endl; }; break; }
+		case 9: {if (doneVoting) { results(e); }; break; }
 		case 10: { done = true; break; }
 		case 11: { save(e, doneVoting); break; }
 		case 12: { load(&e, doneVoting) ; break; }
@@ -343,7 +343,6 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 
 	while (ctl != 'q' && ctl != 'Q')
 	{
-
 		std::cout << "Welcome to voting proccess!" << endl
 			<< "Please enter ID to vote." << endl;
 		cin >> id;
@@ -389,7 +388,6 @@ void results(Elections& e)
 		simpleResults(e);
 		return;
 	}
-
 
 	int winnerIdDist;
 	int party_id, numOfReps;
@@ -499,7 +497,6 @@ void simpleResults(Elections& e)
 				e.getDistrict(0).printPartyRepsNames(party_id);
 			}
 		cout << endl << endl;
-
 	}
 	cout << endl;
 }

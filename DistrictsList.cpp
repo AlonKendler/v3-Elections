@@ -78,8 +78,6 @@ namespace elc
 		bool type = false;
 		int size = list.size();
 
-		//int capacity = list.capacity();
-		//out.write(rcastcc(&capacity), sizeof(capacity));
 		out.write(rcastcc(&size), sizeof(size));
 		for (auto itr : list)
 		{

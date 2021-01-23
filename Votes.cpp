@@ -7,44 +7,13 @@
 using namespace std;
 namespace elc
 {
-	Votes::Votes(int _numOfParties, int _numOfDistricts) : after_calcs(false)
+	Votes::Votes(int _numOfParties, int _numOfDistricts) 
+		: after_calcs(false), numOfParties(_numOfParties), numOfDistricts(_numOfDistricts)
 	{
 		setVotes_table(_numOfDistricts, _numOfParties);
 		setElectors_table(_numOfDistricts, _numOfParties);
 	}
 
-	Votes::~Votes()
-	{
-		//int i;
-
-		//if (votes_table != nullptr)
-		//{
-		//	for (i = 0; i < numOfDistricts; i++)
-		//	{
-		//		delete[] votes_table[i];
-		//	}
-		//	delete[] votes_table;
-		//}
-		//if (electors != nullptr)
-		//{
-		//	for (i = 0; i < numOfDistricts; i++)
-		//	{
-		//		delete[] electors[i];
-		//	}
-		//	delete[] electors;
-		//}
-
-	}
-
-	//void Votes::setnumOfParties(const int& num)
-	//{
-	//	this->numOfParties = num;
-	//}
-
-	//void Votes::setnumOfDistricts(const int& num)
-	//{
-	//	this->numOfDistricts = num;
-	//}
 
 	void Votes::setVotes_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties)
 	{
@@ -78,26 +47,6 @@ namespace elc
 		voter.setVote(true);
 		return true;
 	}
-
-	void Votes::finishCalcs()
-	{
-		after_calcs = true;
-	}
-
-	const bool Votes::isCalcsDone()
-	{
-		return after_calcs;
-	}
-
-	//const int& Votes::getnumOfParties()
-	//{
-	//	return numOfParties;
-	//}
-
-	//const int& Votes::getnumOfDistricts()
-	//{
-	//	return numOfDistricts;
-	//}
 
 	const int Votes::getTotalPartyVotes(const int& partyID) const
 	{
@@ -157,9 +106,10 @@ namespace elc
 	const vector<pair<Party&,int>> Votes::getSortedElectorResults(const PartyList& parties)const
 	{
 		vector<pair<Party&,int>> results;
-		int i, j, elecs;
+		unsigned int i, j;
+		int elecs;
 
-		for (i = 0; i < parties.getSize(); i++)
+		for (i = 0; i < parties.getList().size(); i++)
 		{
 			Party& prt = *(parties.getList()[i]);
 			elecs = getTotalPartyElectors(prt.getpartyID());
@@ -229,7 +179,8 @@ namespace elc
 	
 	void Votes::setElectorsInDist(PartyList& parties, District& dist)
 	{
-		int i, partyElectors, chosen_counter = 0, remaining , distID=dist.getDistID();
+		unsigned int i;
+		int partyElectors, chosen_counter = 0, remaining , distID=dist.getDistID();
 		int totalVotes = getTotalVotesInDistrict(distID);
 		float partyPrecent, approxElectors, avg;
 		//const Senator* temp;
@@ -247,7 +198,7 @@ namespace elc
 		remaining = dist.getDistReps() - chosen_counter;
 		if (remaining > 0)
 		{
-			avg = static_cast<float>(remaining) / parties.getSize();
+			avg = static_cast<float>(remaining) / parties.getList().size();
 			for (i = 0; i < electors[distID].size() && remaining > 0; i++)
 			{
 				partyPrecent = getPartyVotesPrecentageInDist(i, distID);
@@ -268,18 +219,6 @@ namespace elc
 			}
 		}
 
-		//for (i = 0; i < parties.getSize(); i++)
-		//{
-		//	dist.setNumOfPartyReps(electors[dist.getDistID()][i], parties.getParty(i));
-		//	temp = parties.getParty(i).getElectorListInDist(dist.getDistID());
-		//	for (j = 0; j < electors[dist.getDistID()][i]; j++)
-		//	{
-		//		dist.setSenatorInDistReps(temp, parties.getParty(i).getPartyNumber());
-		//		temp = temp->getNext();
-		//	}
-		//}
-
-		
 		for (i = 0; i < electors[distID].size(); i++)
 		{
 			for (int j = 0; j < electors[distID][i]; j++)
@@ -290,7 +229,6 @@ namespace elc
 
 	}
 	
-
 	const int Votes::getElectorsforPartyInDist(const int& partyID, const int& distID) const
 	{
 		return electors[distID][partyID];
@@ -310,7 +248,8 @@ namespace elc
 	const int Votes::getWinnerIDInDist(const int& distID) const
 	{
 		//-1 is for sanity check
-		int i, max = 0, winningPartyID = -1;
+		unsigned int i;
+		int max = 0, winningPartyID = -1;
 
 		for (i = 0; i < votes_table[distID].size(); i++)
 		{
@@ -323,10 +262,10 @@ namespace elc
 		return winningPartyID;
 	}
 
-	/************************* added *********************************/
 	const int Votes::getWinnerIDInDist(District* const dist) const
 	{
-		int i, max = 0, winningPartyID = -1;
+		unsigned int i;
+		int max = 0, winningPartyID = -1;
 
 		if (typeid(dist) == typeid(Divided))
 		{
@@ -339,102 +278,13 @@ namespace elc
 				}
 			}
 		}
-
-		//else
-		//{
-		//	for (i = 0; i < numOfParties; i++)
-		//	{
-		//		if (votes_table[dist->getDistID()][i] > max)
-		//		{
-		//			winningPartyID = i;
-		//			max = votes_table[dist->getDistID()][i];
-		//		}
-		//	}
-		//}
 		return winningPartyID;
 
 	}
-	/************************* added *********************************/
 
-	//const int Votes::getWinner() const
-	//{
-	//	int i, j, max = 0, tempSum, winnerID = -1;
-	//	int* counter = new int[numOfParties];
-	//	for (i = 0; i < numOfParties; i++)
-	//		counter[i] = 0;
-
-	//	//calclulates the number of electors the winning party get in each district
-	//	for (i = 0; i < numOfDistricts; i++)
-	//	{
-	//		tempSum = 0;
-	//		for (j = 0; j < numOfParties; j++)
-	//			tempSum += electors[i][j];
-
-	//		counter[getWinnerIDInDist(i)] += tempSum;
-	//	}
-
-	//	//checks which party has the most electors
-	//	for (i = 0; i < numOfParties; i++)
-	//	{
-	//		if (counter[i] > max)
-	//		{
-	//			max = counter[i];
-	//			winnerID = i;
-	//		}
-	//	}
-	//	delete[] counter;
-	//	return winnerID;
-
-	//}
-
-
-	///************************* added *********************************/
-	//const int& Votes::getWinner(const DistrictsList& D_list) const
-	//{
-	//	int i, j, max = 0, tempSum, winnerID = -1;
-	//	int* counter = new int[numOfParties];
-	//	const District* temp;
-
-	//	for (i = 0; i < numOfParties; i++)
-	//		counter[i] = 0; //intiating party-electors counter
-
-	//	for (i = 0; i < numOfDistricts; i++)
-	//	{
-	//		temp = &D_list.getDistrict(i);
-	//		if (typeid(*temp) == typeid(Divided)) //if distrcit is Divided
-	//		{
-	//			for (j = 0; j < numOfParties; j++) 
-	//			{ //count for each party the number of electors they got
-	//				counter[j] += electors[i][j];
-	//			}
-	//		}
-	//		else //the district is not divided
-	//		{
-	//			//add all the electors is the district to the party that won in that district
-	//			tempSum = 0;
-	//			for (j = 0; j < numOfParties; j++)
-	//				tempSum += electors[i][j];
-
-	//			counter[getWinnerIDInDist(i)] += tempSum;
-	//	
-	//		}
-	//	}
-	//	//checks which party has the most electors
-	//	for (i = 0; i < numOfParties; i++)
-	//	{
-	//		if (counter[i] > max)
-	//		{
-	//			max = counter[i];
-	//			winnerID = i;
-	//		}
-	//	}
-	//	delete[] counter;
-	//	return winnerID;
-
-	//}
 	/************************* Seralization *********************************/
 
-	/*void Votes::save(ofstream& out) const
+	void Votes::save(ofstream& out) const
 	{
 		bool temp = false;
 		out.write(rcastcc(&temp), sizeof(temp));
@@ -442,12 +292,12 @@ namespace elc
 		out.write(rcastcc(&numOfDistricts), sizeof(numOfDistricts));
 		int flag1,flag2; // 0 if electors && votetable are null ptr, else flag ==1
 
-		if (electors == nullptr)
+		if (electors.size() == 0)
 			flag1 = 0;
 		else
 			flag1 = 1;
 
-		if (votes_table == nullptr)
+		if (votes_table.size() == 0)
 			flag2 = 0;
 		else
 			flag2 = 1;
@@ -488,13 +338,12 @@ namespace elc
 		in.read(rcastc(&flag1), sizeof(flag1));
 		in.read(rcastc(&flag2), sizeof(flag2));
 
+
 		if (flag1 == 1)
 		{
-			electors = new int*[numOfDistricts];
-
+			setElectors_table(numOfDistricts, numOfParties);
 			for (int i = 0; i < numOfDistricts; i++)
 			{
-				electors[i] = new int[numOfParties];
 				for (int j = 0; j < numOfParties; j++)
 				{
 					in.read(rcastc(&electors[i][j]), sizeof(int));
@@ -504,16 +353,14 @@ namespace elc
 
 		if (flag2 ==1)
 		{
-			votes_table = new int* [numOfDistricts];
+			setVotes_table(numOfDistricts,numOfParties);
 			for (int i = 0; i < numOfDistricts; i++)
 			{
-				votes_table[i] = new int[numOfParties];
 				for (int j = 0; j < numOfParties; j++)
 				{
 					in.read(rcastc(&votes_table[i][j]), sizeof(int));
 				}
 			}
 		}
-	}*/
-
+	}
 }

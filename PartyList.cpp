@@ -33,6 +33,10 @@ namespace elc
 		{
 			return *it; //return the pointer of the element in terator?
 		}
+		else
+		{
+			return nullptr;
+		}
 	}
 
 	//const string const PartyList::getPartyName(const int& partyID) const
