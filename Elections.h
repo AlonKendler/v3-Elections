@@ -69,7 +69,7 @@ namespace elc {
 
 		/*********************** voting proccess ***************************/
 		void StartVotingProccess();
-		bool setVote(Citizen& voter, const int& partyID) { return voting.setVote(voter, partyID); }
+		void setVote(Citizen& voter, const int& partyID);
 		const Votes& getVotes() { return voting; }
 		void setResults();
 

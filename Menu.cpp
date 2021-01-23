@@ -51,7 +51,7 @@ void inputScreenPage2(Elections& e)
 		<< " 5 - print ALL districts." << endl
 		<< " 6 - print ALL citizens." << endl
 		<< " 7 - print ALL parties." << endl
-		<< " 8 - VOTE!! (inputs will no longer be avilable)" << endl
+		<< " 8 - VOTE!!" << endl
 		<< " 9 - show results." << endl
 		<< " 10 - exit this menu." << endl
 		<< " 11 - Save Elections Round." << endl
@@ -355,7 +355,6 @@ void openVotingMenu(Elections& e)
 	char ctl = '0';
 	int id, partyID;
 	Citizen* temp;
-	//e.StartVotingProccess();
 	system("CLS");
 
 	while (ctl != 'q' && ctl != 'Q')
@@ -382,8 +381,15 @@ void openVotingMenu(Elections& e)
 			std::cout << "enter Party from avilable: " << endl;
 			e.printPartiesNameAndID(); std::cout << endl;
 			cin >> partyID;
-			e.setVote(*temp, partyID);
-			std::cout << "Thank You very much for participating int the Voting Proccess!" << endl;
+			try {
+				e.setVote(*temp, partyID);
+				std::cout << "Thank You very much for participating in the Voting Proccess!" << endl;
+			}
+			catch (out_of_range& ex)
+			{
+				cout << ex.what() << endl;
+				cout << "please try again." << endl;
+			}
 		}
 		std::cout << "please press any key other then 'Q'and then 'Enter' to finish, and clear your place for the next Voter," << endl
 			<< "Or press 'Q' then 'Enter' to terminate voting proccess " << endl;

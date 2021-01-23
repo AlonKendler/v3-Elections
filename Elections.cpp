@@ -90,6 +90,13 @@ namespace elc {
 	//	voting.setElectors_table(numOfDistricts, numOfParties);
 	}
 
+	void Elections::setVote(Citizen& voter, const int& partyID) 
+	{ 
+		if (partyID < 0 || partyID >= getPartiesLength())
+			throw(out_of_range("invalid Party"));
+		 voting.setVote(voter, partyID);
+	}
+
 	void Elections::setResults()
 	{
 		if (!voting.getAfterCalcs()) 

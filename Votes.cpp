@@ -52,12 +52,10 @@ namespace elc
 		}
 	}
 
-	bool Votes::setVote(Citizen& voter, int PartyID)
+	void Votes::setVote(Citizen& voter, int PartyID)
 	{
 		vote_buffer.push_back(pair<int, int>(voter.getDistrict().getDistID(), PartyID));
-		//votes_table[voter.getDistrict().getDistID()][PartyID]++;
 		voter.setVote(true);
-		return true;
 	}
 
 	const int Votes::getTotalPartyVotes(const int& partyID) const

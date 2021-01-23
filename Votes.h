@@ -34,7 +34,7 @@ namespace elc
 		void setnumOfDistricts(const int& num) { numOfDistricts = num; }
 		void setVotes_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties);
 		void setElectors_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties);
-		bool setVote(Citizen&, int PartyID);
+		void setVote(Citizen&, int PartyID);
 		void setAfterCalcs(bool exp) { after_calcs = exp; }
 		void updateVotesTable();
 
