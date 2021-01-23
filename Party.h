@@ -39,6 +39,7 @@ class CitizensList;
 		int getpartyID() const					{ return partyID; };
 
 		const vector<Representative>& getRepsFromDist(const int distID) const { return RepsList[distID]; }
+		const vector<vector<Representative>>& getRepsList() const { return RepsList; }
 
 		//--Setters--//
 		void setPartyName(string _n)			{ partyName = _n; };

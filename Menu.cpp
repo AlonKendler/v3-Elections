@@ -3,6 +3,7 @@
 #include "Elections.h"
 
 using namespace std;
+
 using namespace elc;
 
 #define MAX_SIZE 50
@@ -321,9 +322,11 @@ void addPartyCandidates(Elections& e)
 		cin >> id;
 		temp = e.getCitizenPtr(id);
 	}
+
 	std::cout << "enter Party from avilable: ";
 	e.printPartiesNameAndID(); std::cout << endl;
 	cin >> partyID;
+
 	if (e.getRoundType())
 		distID = 0;
 	else
@@ -332,7 +335,18 @@ void addPartyCandidates(Elections& e)
 		e.printDistrictsNameAndID(); std::cout << endl;
 		cin >> distID;
 	}
-	e.addPartyCandidate(*temp, partyID, distID);
+	try {
+		e.addPartyCandidate(*temp, partyID, distID);
+	}
+	catch (out_of_range& ex)
+	{
+		cout << ex.what() << endl;
+		cout << "Representative object not added, procced" << endl;
+	}
+	catch (exception& ex)
+	{
+		cout << ex.what() << endl;
+	}
 }
 
 void openVotingMenu(Elections& e, bool& doneVoting)

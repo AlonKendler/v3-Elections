@@ -41,8 +41,18 @@ namespace elc {
 
 	void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)
 	{
-		parties.updateRepsList(districts.getList().size()); //
-		parties.addPartyCandidate(rep, partyID, distID);
+		if (partyID < 0 || partyID >= getPartiesLength())
+			throw(out_of_range("invalid Party"));
+		if (distID < 0 || distID >= getDistrictsLength())
+			throw(out_of_range("invalid District"));
+		parties.updateRepsList(districts.getList().size()); 
+		try {
+			parties.addPartyCandidate(rep, partyID, distID);
+		}
+		catch (exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+			throw(invalid_argument("Representative object not added, procced"));
+		}
 	}
 
 	void Elections::printCitizens() 

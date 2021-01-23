@@ -31,7 +31,7 @@ namespace elc
 	
 		auto it = find_if(list.begin(), list.end(), [&id]( Citizen* obj) {return obj->getID() == id; });
 	
-		if (it != list.end())
+		if (it != list.end()) 
 		{
 			return *it; //return the pointer of the element in terator?
 		}

@@ -56,7 +56,19 @@ namespace elc
 
 	void PartyList::addPartyCandidate(const Citizen& rep, int partyID, int distID)
 	{
-		//list.getParty(partyID).addRepresentatitve(rep, distID);
+		//check if citizen& rep is alredy representative
+		for (auto itr : list)
+		{
+			vector<vector<Representative>> temp = itr->getRepsList();
+			for (auto itrI : temp)
+			{
+				for (auto itrJ : itrI)
+				{
+					if (itrJ.getRep().getID() == rep.getID())
+						throw(invalid_argument("Citizen alredy representative"));
+				}
+			}
+		}
 		list.at(partyID)->addRepresentative(rep, distID);
 	}
 
