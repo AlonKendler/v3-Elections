@@ -24,6 +24,9 @@ namespace elc
 	public:
 		Votes() :votes_table(), electors(),after_calcs(false), numOfParties(0), numOfDistricts(0) {}
 		Votes(int _numOfParties, int _numOfDistricts);
+		Votes(const Votes& o) : after_calcs(o.after_calcs), numOfParties(o.numOfParties), 
+			numOfDistricts(o.numOfDistricts), votes_table(o.votes_table), electors(o.electors) { }
+		
 		~Votes() {}
 
 		void setnumOfParties(const int& num) { numOfParties = num; }
@@ -54,6 +57,27 @@ namespace elc
 		const int getWinnerIDInDist(District* const dist) const;
 		//const int getWinner() const;
 		//const int& getWinner(const DistrictsList& D_list) const;
+
+
+		friend void swap(Votes& first, Votes& second) // nothrow
+		{
+			// enable ADL (not necessary in our case, but good practice) 
+			using std::swap;
+
+			// by swapping the members of two objects,
+			// the two objects are effectively swapped
+			swap(first.after_calcs, second.after_calcs);
+			swap(first.numOfParties, second.numOfParties);
+			swap(first.numOfDistricts, second.numOfDistricts);
+			swap(first.votes_table, second.votes_table);
+			swap(first.electors, second.electors);
+		}
+
+		Votes& operator=(Votes other) // (1)
+		{
+			swap(*this, other); // (2)
+			return *this;
+		}
 
 		void save(ofstream& out) const;
 		void load(ifstream& in);

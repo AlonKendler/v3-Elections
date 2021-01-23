@@ -70,9 +70,9 @@ namespace elc
 	{
 		int size = list.size();
 		out.write(rcastcc(&size), sizeof(size));
-		for (int i = 0; i < size; ++i)
+		for (auto itr : list)
 		{
-			list[i]->save(out);
+			itr->save(out);
 		}
 	}
 

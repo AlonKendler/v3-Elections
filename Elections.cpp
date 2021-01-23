@@ -34,7 +34,7 @@ namespace elc {
 
 	void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)
 	{
-		parties.updateRepsList(districts.getList().size());
+		parties.updateRepsList(districts.getList().size()); //
 		parties.addPartyCandidate(rep, partyID, distID);
 	}
 
@@ -68,9 +68,9 @@ namespace elc {
 	{
 		int numOfDistricts = districts.getList().size();
 		int numOfParties = parties.getList().size();
-
-		voting.setVotes_table(numOfDistricts, numOfParties);
-		voting.setElectors_table(numOfDistricts, numOfParties);
+		voting = Votes(numOfParties, numOfDistricts);
+	//	voting.setVotes_table(numOfDistricts, numOfParties);
+	//	voting.setElectors_table(numOfDistricts, numOfParties);
 	}
 
 	void Elections::setResults()

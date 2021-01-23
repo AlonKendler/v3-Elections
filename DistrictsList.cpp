@@ -91,8 +91,7 @@ namespace elc
 	{
 		bool type = false;
 		int size;
-		//int capacity;
-		//in.read(rcastc(&capacity), sizeof(capacity));
+
 		in.read(rcastc(&size), sizeof(size));
 	
 		list = vector<District*>(size);

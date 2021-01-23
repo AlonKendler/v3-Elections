@@ -381,6 +381,7 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 
 void results(Elections& e)
 {
+
 	e.setResults();
 
 	if (e.getRoundType())
