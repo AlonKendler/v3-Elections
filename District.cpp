@@ -32,28 +32,9 @@ namespace elc
 		addPartyRepToList(partyID, Representative(rep, partyID));
 	}
 
-	bool District::initRepsList(const int& size /*, Party* list*/)
+	bool District::initRepsList(const int& size)
 	{
-		////RepsList.reserve(size+1);
-		//
-		//
-		//cout << "test" << endl;
-		//for (int i = 0; i < size; i++)
-		//{
-		//	RepsList.a
-		//}
-		//for (auto obj : RepsList)
-		//{
-		//	RepsList.push_back()
-		//}
-		//	RepsList[i].set	//RepsList[i].setPartyID(list[i].getPartyNumber())
-		//}
-		//
-		//
-		//reps_size = size + 1;
-		//reps_lentgh = size;
-		//delete[] RepsList;
-		//RepsList = temp;
+
 		for (int i = 0; i < size; i++)
 		{
 			RepsList.push_back(vector<Representative>());
@@ -111,11 +92,11 @@ namespace elc
 	void District::save(ofstream& out) const
 	{
 		int len = name.size();
-		out.write(rcastcc(&len), sizeof(len));				 // name length
+		out.write(rcastcc(&len), sizeof(len));			
 		out.write(rcastcc(name.c_str()), len);
 		out.write(rcastcc(&distID), sizeof(distID));	
 		out.write(rcastcc(&numOfReps), sizeof(numOfReps));	
-		out.write(rcastcc(&voters_precentage), sizeof(voters_precentage));				 // int - yob
+		out.write(rcastcc(&voters_precentage), sizeof(voters_precentage));			
 	}
 
 	void District::load(ifstream& in)

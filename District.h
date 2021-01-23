@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Party.h"
 #include "Representative.h"
-#include <list>
 #include <vector>
 
 using namespace std;
@@ -21,7 +20,7 @@ namespace elc
 		int distID;
 		int numOfReps; //Total number of representatives in the district
 		float voters_precentage;
-		vector<Citizen*> citizens; 
+		DynamicArray<Citizen*> citizens;
 		vector<vector<Representative>> RepsList;
 
 	public:
@@ -66,7 +65,7 @@ namespace elc
 		const float& getVotersPercentage() const	 { return voters_precentage; }
 
 
-		const vector<Citizen*>& GetDistCitizens() const { return citizens; }
+		const DynamicArray<Citizen*>& GetDistCitizens() const { return citizens; }
 		const vector<Representative>& getRepsFromParty(const int partyID) const { return RepsList[partyID]; }
 		void printPartyRepsNames(const int& partyID)const;
 
