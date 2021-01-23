@@ -340,7 +340,7 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 	char ctl = '0';
 	int id, partyID;
 	Citizen* temp;
-	e.StartVotingProccess();
+	//e.StartVotingProccess();
 	system("CLS");
 
 	while (ctl != 'q' && ctl != 'Q')
@@ -371,7 +371,7 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 			std::cout << "Thank You very much for participating int the Voting Proccess!" << endl;
 		}
 		std::cout << "please press any key other then 'Q'and then 'Enter' to finish, and clear your place for the next Voter," << endl
-			<< "Or press 'Q' then 'Enter' to terminate voting proccess (once the program terminates, no more votes will be acceptable)" << endl;
+			<< "Or press 'Q' then 'Enter' to terminate voting proccess " << endl;
 		cin.ignore();
 		cin >> ctl;
 		system("CLS");
