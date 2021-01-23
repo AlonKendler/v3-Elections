@@ -8,7 +8,7 @@ using namespace std;
 namespace elc
 {
 	Votes::Votes(int _numOfParties, int _numOfDistricts) 
-		: after_calcs(false), numOfParties(_numOfParties), numOfDistricts(_numOfDistricts)
+		: after_calcs(false), numOfParties(_numOfParties), numOfDistricts(_numOfDistricts), vote_buffer()
 	{
 		setVotes_table(_numOfDistricts, _numOfParties);
 		setElectors_table(_numOfDistricts, _numOfParties);
@@ -41,9 +41,21 @@ namespace elc
 		}
 	}
 
+	void Votes::updateVotesTable()
+	{
+		auto itr = vote_buffer.begin();
+		while (itr != vote_buffer.end())
+		{
+			votes_table[itr->first][itr->second]++;
+			++itr;
+			vote_buffer.erase(vote_buffer.begin());
+		}
+	}
+
 	bool Votes::setVote(Citizen& voter, int PartyID)
 	{
-		votes_table[voter.getDistrict().getDistID()][PartyID]++;
+		vote_buffer.push_back(pair<int, int>(voter.getDistrict().getDistID(), PartyID));
+		//votes_table[voter.getDistrict().getDistID()][PartyID]++;
 		voter.setVote(true);
 		return true;
 	}

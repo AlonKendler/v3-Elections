@@ -3,7 +3,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <vector>
-#include <utility>
+#include <list>
 #include "CitizenList.h"
 #include "PartyList.h"
 #include "DistrictsList.h"
@@ -18,14 +18,15 @@ namespace elc
 		bool after_calcs;
 		int numOfParties;
 		int numOfDistricts;
-		vector<vector<int>> votes_table; //holds in each cell the number of votes
-		vector<vector<int>> electors;	//holds in each cell the number of electors from each party
+		list<pair<int /*DistID*/, int /*PartyID*/>> vote_buffer; //buffer for collecting ballots before the voting stage is ending
+		vector<vector<int>> votes_table; //holds in each cell the number of votes for each party in a certain district
+		vector<vector<int>> electors;	//holds in each cell the number of electors for each party in a certain district
 
 	public:
-		Votes() :votes_table(), electors(),after_calcs(false), numOfParties(0), numOfDistricts(0) {}
+		Votes() : vote_buffer(), votes_table(), electors(),after_calcs(false), numOfParties(0), numOfDistricts(0) {}
 		Votes(int _numOfParties, int _numOfDistricts);
 		Votes(const Votes& o) : after_calcs(o.after_calcs), numOfParties(o.numOfParties), 
-			numOfDistricts(o.numOfDistricts), votes_table(o.votes_table), electors(o.electors) { }
+			numOfDistricts(o.numOfDistricts),vote_buffer(o.vote_buffer), votes_table(o.votes_table), electors(o.electors) { }
 		
 		~Votes() {}
 
@@ -35,6 +36,7 @@ namespace elc
 		void setElectors_table(const unsigned int& numOfDistricts, const unsigned int& numOfParties);
 		bool setVote(Citizen&, int PartyID);
 		void setAfterCalcs(bool exp) { after_calcs = exp; }
+		void updateVotesTable();
 
 		const bool getAfterCalcs()		 { return after_calcs; }
 		const int& getnumOfParties()	 { return numOfParties;	}

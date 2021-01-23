@@ -94,12 +94,17 @@ namespace elc {
 	{
 		if (!voting.getAfterCalcs()) 
 		{
-			bool flag = true;
+			int numOfDistricts = districts.getList().size();
+			int numOfParties = parties.getList().size();
+
+			voting = Votes(numOfParties, numOfDistricts);
+			voting.updateVotesTable();
+
 			int partiesSize = getPartiesLength();
 			for (int i = 0; i < getDistrictsLength(); i++)
 			{
-				districts.getDistrict(i, flag).initRepsList(partiesSize);
-				voting.setElectorsInDist(parties, getDistrict(i, flag));
+				districts.getDistrict(i, true).initRepsList(partiesSize);
+				voting.setElectorsInDist(parties, districts.getDistrict(i, true));
 			}
 			voting.setAfterCalcs(true);
 		}
