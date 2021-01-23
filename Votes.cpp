@@ -48,7 +48,7 @@ namespace elc
 		{
 			votes_table[itr->first][itr->second]++;
 			++itr;
-			vote_buffer.erase(vote_buffer.begin());
+			//vote_buffer.erase(vote_buffer.begin());
 		}
 	}
 
@@ -145,49 +145,37 @@ namespace elc
 		return results;
 	}
 
-	//int** Votes::getPartiesWinningOrder()const
-	//{
-	//	//double array keeping party id on 0, number of votes on 1, and number of electors in 2 
-	//	int** order = new int*[numOfParties];
-	//	int i, j, party_temp, votes_temp, electors_temp;
+	const vector<pair<Party&, int>> Votes::getSortedVotesResults(const PartyList& parties)const
+	{
+		vector<pair<Party&, int>> results;
+		unsigned int i, j;
+		int votes;
 
-	//	//creating order array
-	//	for (i = 0; i < numOfParties; i++)
-	//		order[i] = new int[3];
+		for (i = 0; i < parties.getList().size(); i++)
+		{
+			Party& prt = *(parties.getList()[i]);
+			votes = getTotalPartyVotes(prt.getpartyID());
 
-	//	//initializing order array
-	//	for (i = 0; i < numOfParties; i++)
-	//	{
-	//		order[i][0] = i;
-	//		order[i][1] = getTotalPartyVotes(i);
-	//		order[i][2] = getTotalPartyElectors(i);
-	//	}
+			results.push_back(pair<Party&, int>(prt, votes));
+		}
 
-	//	//BubbleSort by electors
-	//	for (i=0;i<numOfParties-1;i++)
-	//		for (j = 0; j < numOfParties-i-1; j++)
-	//		{
-	//			if (order[j][2] > order[j+1][2])
-	//			{
-	//				//swap(i,j)
-	//				party_temp = order[j][0];
-	//				votes_temp = order[j][1];
-	//				electors_temp = order[j][2];
+		//bubbleSort for array of <part,int> pairs
+		//sort by the int value
+		for (i = 0; i < results.size() - 1; i++)
+		{
+			for (j = 0; j < results.size() - i - 1; j++)
+			{
+				if (results.at(j).second > results.at(j + 1).second)
+				{
+					results.at(j).swap(results.at(j + 1));
+				}
+			}
+		}
 
-	//				order[j][0] = order[j+1][0];
-	//				order[j][1] = order[j+1][1];
-	//				order[j][2] = order[j+1][2];
+		return results;
+	}
 
-	//				order[j+1][0] = party_temp;
-	//				order[j+1][1] = votes_temp;
-	//				order[j+1][2] = electors_temp;
-	//			}
-
-	//		}
-	//	return order;
-
-
-	//}
+	
 	
 	void Votes::setElectorsInDist(PartyList& parties, District& dist)
 	{
@@ -338,6 +326,14 @@ namespace elc
 				}
 			}
 		}
+
+		int bufferSize = vote_buffer.size();
+		out.write(rcastcc(&bufferSize), sizeof(bufferSize));
+		for (auto itr : vote_buffer)
+		{
+			out.write(rcastcc(&itr.first), sizeof(itr.first));
+			out.write(rcastcc(&itr.second), sizeof(itr.second));
+		}
 	}
 
 	void Votes::load(ifstream& in)
@@ -374,5 +370,17 @@ namespace elc
 				}
 			}
 		}
+
+		int bufferSize;
+		pair<int, int> temp;
+		vote_buffer.clear();
+		in.read(rcastc(&bufferSize), sizeof(bufferSize));
+		for (int i = 0; i < bufferSize; i++)
+		{
+			in.read(rcastc(&temp.first), sizeof(temp.first));
+			in.read(rcastc(&temp.second), sizeof(temp.second));
+			vote_buffer.push_back(temp);
+		}
+
 	}
 }

@@ -22,9 +22,9 @@ void addCitizen(Elections& e);
 void addParty(Elections& e);
 void addPartyCandidates(Elections& e);
 
-void results(Elections& e);
+void results(Elections& e, bool& doneVoting);
 void simpleResults(Elections& e);
-void openVotingMenu(Elections& e, bool& doneVoting);
+void openVotingMenu(Elections& e);
 bool handleErrors(int ctrl, Elections& e);
 
 void inputScreenPage1()
@@ -147,8 +147,9 @@ void mainMenu(Elections& e, bool& doneVoting)
 		case 5: {e.printDistricts(); break; }
 		case 6: {e.printCitizens(); break; }
 		case 7: {e.printParties(); break; }
-		case 8: {if (!doneVoting) openVotingMenu(e, doneVoting); break; }
-		case 9: {if (doneVoting) { results(e); }; break; }
+		case 8: {if (!doneVoting) openVotingMenu(e); break; }
+		case 9: {try { results(e, doneVoting); }
+			  catch (exception& ex) { cout << ex.what() << endl; } break; }
 		case 10: { done = true; break; }
 		case 11: { save(e, doneVoting); break; }
 		case 12: { load(&e, doneVoting) ; break; }
@@ -349,7 +350,7 @@ void addPartyCandidates(Elections& e)
 	}
 }
 
-void openVotingMenu(Elections& e, bool& doneVoting)
+void openVotingMenu(Elections& e)
 {
 	char ctl = '0';
 	int id, partyID;
@@ -390,14 +391,17 @@ void openVotingMenu(Elections& e, bool& doneVoting)
 		cin >> ctl;
 		system("CLS");
 	}
-	doneVoting = true;
+
 	return;
 }
 
 
-void results(Elections& e)
+void results(Elections& e, bool& doneVoting)
 {
+	if (e.isVotesEmpty())
+		throw(invalid_argument("No votes submited. Please start voting proccess first"));
 
+	doneVoting = true;
 	e.setResults();
 
 	if (e.getRoundType())
@@ -490,7 +494,7 @@ void simpleResults(Elections& e)
 {
 	const CitizensList& citizens = e.getCitizensList();
 	int i, numOfReps, party_id, partyVotes, numOfParties = e.getPartiesLength();
-	vector<pair<Party&, int>> party_order = e.getVotes().getSortedElectorResults(e.getPartyList());
+	vector<pair<Party&, int>> party_order = e.getVotes().getSortedVotesResults(e.getPartyList());
 	string partyName;
 
 	cout << "for Elections " << e.getDate() << ", The elections results are as follow: " << endl << endl
