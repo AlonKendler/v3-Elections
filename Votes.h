@@ -38,6 +38,7 @@ namespace elc
 		void setAfterCalcs(bool exp) { after_calcs = exp; }
 		void updateVotesTable();
 
+		bool isBufferEmpty()			 { return (vote_buffer.size() == 0); }
 		const bool getAfterCalcs()		 { return after_calcs; }
 		const int& getnumOfParties()	 { return numOfParties;	}
 		const int& getnumOfDistricts()	 { return numOfDistricts; }
@@ -47,8 +48,8 @@ namespace elc
 		const float& getPartyVotesPrecentageInDist(const int& PartyID, const int& distID)const;
 		const float& getTotalVotesPrecentage(const CitizensList& list)const;
 		const float& getDistVotesPrecantage(const District& dist)const;
-		const vector<pair<Party&,int>> getSortedElectorResults(const PartyList& parties)const;
-		//int** getPartiesWinningOrder()const;
+		const vector<pair<Party&, int>> getSortedElectorResults(const PartyList& parties)const;
+		const vector<pair<Party&, int>> getSortedVotesResults(const PartyList& parties)const;
 
 		//calculates the number of electors won for each Party in the district,
 		//then adds the newly chosen senators under their party ID to the district representatives.
@@ -57,8 +58,6 @@ namespace elc
 		const int getTotalPartyElectors(const int& partyID)const;
 		const int getWinnerIDInDist(const int& distID) const;
 		const int getWinnerIDInDist(District* const dist) const;
-		//const int getWinner() const;
-		//const int& getWinner(const DistrictsList& D_list) const;
 
 
 		friend void swap(Votes& first, Votes& second) // nothrow

@@ -42,6 +42,7 @@ namespace elc {
 		const Date& getDate() const					   { return date; }
 		const int& getRoundType() const				   { return roundType;  }
 
+		bool isVotesEmpty()							   { return voting.isBufferEmpty(); }
 		Party* getParty(const int& partyID)			   { return (parties.getParty(partyID)); }
 		Citizen* getCitizenPtr(int id)				   { return citizens.getCitizenPtr(id); }
 		 District* getDistrictPtr(const int& distID)   { return districts.getDistrictPtr(distID); }
