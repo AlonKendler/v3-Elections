@@ -56,7 +56,7 @@ namespace elc {
 
 		void addCitizen(string name, int id, const District& dist, int yob);
 		void addParty(string name, const Citizen& boss);
-		void addDistrict(string name, int num, bool div);
+		void addDistrict(string name, int num, int div);
 		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
 		
 		void printCitizens();

@@ -27,9 +27,16 @@ namespace elc {
 			throw(invalid_argument("Party object not added, procced"));
 		}
 	}
-	void Elections::addDistrict(string name, int num, bool div)
+	void Elections::addDistrict(string name, int num, int div)
 	{
-		districts.setDistrict(name, num, div);
+		try {
+			districts.setDistrict(name, num, div);
+			std::cout << "all good, passed input" << endl;
+		}
+		catch (std::exception& ex) {
+			cout << "Error: " << ex.what() << endl;
+			throw(invalid_argument("District object not added, procced"));
+		}
 	}
 
 	void Elections::addPartyCandidate(const Citizen& rep, int partyID, int distID)

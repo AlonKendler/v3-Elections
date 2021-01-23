@@ -201,8 +201,8 @@ void load(Elections* e, bool& doneVoting )
 void addDistric(Elections& e)
 {
 	string name;
-	int num;
-	bool type = false;
+	int num, type;
+	
 
 	std::cout << "enter name of district:" << endl;
 	cin.ignore();
@@ -210,10 +210,12 @@ void addDistric(Elections& e)
 	std::cout << "enter number of representitves:" << endl; cin >> num;
 	std::cout << "enter type of district: (0 - normal, 1 - divided):" << endl; cin >> type;
 
-	//need to handle error: exsisting name
+	try {
 		e.addDistrict(name, num, type); 
-
-	std::cout << "all good, passed input" << endl;
+	}
+	catch (std::exception& ex) {
+		cout << "Error: " << ex.what() << endl;
+	}
 }
 
 bool validateCitizenAge(Elections& e, int yob)

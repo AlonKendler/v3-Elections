@@ -23,7 +23,7 @@ namespace  elc {
 		}
 
 		
-		void setDistrict(string _DistrictName, int numOfReps, bool div);
+		void setDistrict(string _DistrictName, int numOfReps, int div);
 		void setDistrict(District* _dist);
 
 		bool setCitizenInDist(const  Citizen&, const District& dist);
