@@ -39,7 +39,7 @@ namespace elc
 		return nullptr; //if citizen not found then,
 	}
 
-	const vector<Citizen*>  CitizensList::getList()const
+	const DynamicArray<Citizen*>  CitizensList::getList()const
 	{
 		return list;
 	}
@@ -57,7 +57,7 @@ namespace elc
 
 	std::ostream& operator<<(std::ostream& out, const CitizensList& other)
 	{
-		for (unsigned int i = 0; i < other.list.size(); i++)
+		for ( int i = 0; i < other.list.size(); i++)
 		{
 			cout << *other.list[i] << '\n';
 		}
@@ -80,7 +80,7 @@ namespace elc
 	{
 		int size;
 		in.read(rcastc(&size), sizeof(size));
-		list =  vector<Citizen*>(size);
+		list = DynamicArray<Citizen*>(size);
 		for (int i = 0; i < size; i++)
 		{
 			list[i] = new Citizen();

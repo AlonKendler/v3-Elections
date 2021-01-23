@@ -66,13 +66,13 @@ namespace elc
 
 	void DistrictsList::PrintNameAndId() 
 	{
-		for (unsigned int i = 0; i < list.size(); i++)
+		for ( int i = 0; i < list.size(); i++)
 			list[i]->printNameAndId();
 	}
 
 	std::ostream& operator<<(std::ostream& out, const DistrictsList& other)
 	{
-		for (unsigned int i = 0; i < other.list.size(); i++)
+		for ( int i = 0; i < other.list.size(); i++)
 		{
 			cout << *other.list[i] << '\n';
 		}
@@ -101,7 +101,7 @@ namespace elc
 
 		in.read(rcastc(&size), sizeof(size));
 	
-		list = vector<District*>(size);
+		list = DynamicArray<District*>(size);
 		for (int i = 0; i < size; ++i)
 		{
 			in.read(rcastc(&type), sizeof(type));

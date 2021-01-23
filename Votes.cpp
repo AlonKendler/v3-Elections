@@ -118,8 +118,7 @@ namespace elc
 	const vector<pair<Party&,int>> Votes::getSortedElectorResults(const PartyList& parties)const
 	{
 		vector<pair<Party&,int>> results;
-		unsigned int i, j;
-		int elecs;
+		int i, j, elecs;
 
 		for (i = 0; i < parties.getList().size(); i++)
 		{

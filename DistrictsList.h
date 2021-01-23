@@ -2,6 +2,7 @@
 #include <iostream>
 #include "district.h"
 #include <vector>
+#include "DynamicArray.h"
 
 
 using namespace std;
@@ -11,7 +12,7 @@ namespace  elc {
 	class DistrictsList
 	{
 	private:
-		vector<District*> list; //hold pointers vecause have base-inheritance disttricts
+		DynamicArray<District*> list; //hold pointers vecause have base-inheritance disttricts
 
 	public:
 		DistrictsList()  {}
@@ -33,7 +34,7 @@ namespace  elc {
 
 
 		District& getDistrict(int distID, bool flag) const { return *(list[distID]); }
-		vector<District*> const getList() const { return list; }
+		DynamicArray<District*> const getList() const { return list; }
 
 	//	const int& getTotalRepsInDist(const int& distID) const { return list[distID]->getDistReps(); }
 		void PrintNameAndId();

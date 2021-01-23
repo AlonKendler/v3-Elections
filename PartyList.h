@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Party.h"
+#include "DynamicArray.h"
 
 
 using namespace std;
@@ -12,7 +13,7 @@ namespace  elc {
 	class PartyList
 	{
 	protected :
-		vector<Party*> list;
+		DynamicArray<Party*> list;
 		
 
 	public:
@@ -28,7 +29,7 @@ namespace  elc {
 		void setParty(Party*);
 
 		Party* getParty(int partyID) ;
-		vector<Party*> const getList() const { return list; }
+		DynamicArray<Party*> const getList() const { return list; }
 		const Representative& getPartyRepInDist(const int& partyID, const int& DistID, const int& place) { return list[partyID]->getRepsFromDist(DistID).at(place); }
 
 		void updateRepsList(int districtsAmount);

@@ -19,6 +19,11 @@ namespace elc {
 			if (month < 1 || month > 12) throw(invalid_argument("invalid month"));
 			if (year < 1 ) throw(invalid_argument("invalid year"));
 			if (month == 2 && day > 28) throw(invalid_argument("i ain't fool, february has 28 days!!"));
+			if (((month % 2 == 1) && (month > 7)) || ((month % 2 == 0) && (month < 8)))
+			{
+				if (month == 2 && day > 28) throw (invalid_argument("Invalid day for this month."));
+				if (day == 31) throw (invalid_argument("Invalid day for this month."));
+			}
 		}
 
 		int getDay() { return day; }

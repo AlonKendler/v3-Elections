@@ -3,6 +3,7 @@
 #include "Citizen.h"
 #include <algorithm>
 #include <vector>
+#include "DynamicArray.h"
 
 
 using namespace std;
@@ -13,7 +14,7 @@ namespace elc {
 	class CitizensList
 	{
 	private:
-		vector<Citizen*> list;
+		DynamicArray<Citizen*> list;
 	
 	public:
 		CitizensList ()  {}
@@ -29,7 +30,7 @@ namespace elc {
 
 		Citizen* const getCitizenPtr(int id) const;
 	//	const Citizen&  getCitizen(int id) const;
-		const vector<Citizen*> getList() const;
+		const DynamicArray<Citizen*> getList() const;
 
 		//bool removeCitizen(const Citizen&);
 

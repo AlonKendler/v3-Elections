@@ -85,13 +85,13 @@ namespace elc
 	}
 	void PartyList::PrintNameAndId()
 	{
-		for (unsigned int i = 0; i < list.size(); i++)
+		for ( int i = 0; i < list.size(); i++)
 			list[i]->printNameAndId();
 	}
 
 	std::ostream& operator<<(std::ostream& out,  const PartyList& other)
 	{
-		for (unsigned int i = 0; i < other.list.size(); i++)
+		for ( int i = 0; i < other.list.size(); i++)
 		{
 			std::cout << *other.list[i] << '\n';
 		}
@@ -112,7 +112,7 @@ namespace elc
 	{
 		int size;
 		in.read(rcastc(&size), sizeof(size));
-		list = vector<Party*>(size);
+		list = DynamicArray<Party*>(size);
 		//for(auto itr : list) allocates memory to itr, not to object?!
 		for(int i=0; i< size; i++)
 		{
