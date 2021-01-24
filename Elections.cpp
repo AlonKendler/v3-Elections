@@ -55,6 +55,21 @@ namespace elc {
 		}
 	}
 
+	bool Elections::enoughReps()
+	{
+		int repsQuota;
+		for (int i = 0; i < getDistrictsLength(); i++)
+		{
+			repsQuota = getDistrict(i).getDistReps();
+			for (int j = 0; j < getPartiesLength(); j++)
+			{
+				if (repsQuota > getParty(j)->getRepsList().size())
+					return false;
+			}
+		}
+		return true;
+	}
+
 	void Elections::printCitizens() 
 	{
 		cout << citizens; 

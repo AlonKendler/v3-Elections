@@ -102,13 +102,25 @@ void inputDateAndElectionRound(Elections& e)
 	}
 	e.setDate(_date); //sets e.date after handle input
 
+	
 	std::cout << "choose Election round type (0 - normal) , (1 - simple) : "; cin >> type;
 	if (type != 0 && type != 1) cout << "That imput was not a choice... ill make it a Simple round.." << endl;
 	if (type)
 	{
-		e.setRoundType(type);
-		std::cout << "Enter number of Representitives: "; cin >> reps;
-		e.handleSimpleRound(distName, reps);
+
+		while (true)
+		{
+			e.setRoundType(type);
+			std::cout << "Enter number of Representitives: "; cin >> reps;
+			try {
+				e.handleSimpleRound(distName, reps);
+				break;
+			}
+			catch (exception& ex)
+			{
+				cout << ex.what() << endl;
+			}
+		}
 	}
 }
 
@@ -122,7 +134,8 @@ void mainMenu(Elections& e, bool& doneVoting)
 	while (!done)
 	{
 		inputScreenPage2(e);
-		cin >> ctrl;
+		cin.ignore();
+			cin >> ctrl;
 		while (ctrl < 1 || ctrl>12) //handle inputs
 		{
 			std::cout << "wrong input!!" << endl;
@@ -404,8 +417,10 @@ void openVotingMenu(Elections& e)
 
 void results(Elections& e, bool& doneVoting)
 {
-	if (e.isVotesEmpty())
+	if (e.isVotesEmpty() )
 		throw(invalid_argument("No votes submited. Please start voting proccess first"));
+	if (!e.enoughReps())
+		throw(invalid_argument("there are not enough Representatives in a party"));
 
 	doneVoting = true;
 	e.setResults();
@@ -554,6 +569,11 @@ bool handleErrors(int ctrl, Elections& e)
 		std::cout << "no citizens avilable" << endl;
 		return true;
 	}
+	if (ctrl == 8 && e.getCitizensLength() == 0)
+	{
+		std::cout << "no citizens avilable" << endl;
+		return true;
+	}	
 	return false;
 }
 

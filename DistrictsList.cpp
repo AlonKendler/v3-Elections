@@ -9,6 +9,7 @@ namespace elc
 	void DistrictsList::setDistrict(string _DistrictName, int numOfReps, int div)
 	{
 		District* temp;
+		if (numOfReps <= 0) throw invalid_argument("invalid number of representatives. enter positive number.");
 		if (div == 0) { temp = new Divided(_DistrictName, numOfReps, list.size()); }
 		else if( div == 1) { temp = new District(_DistrictName, numOfReps, list.size()); }
 		else { throw(invalid_argument("invalid District-Type")); }

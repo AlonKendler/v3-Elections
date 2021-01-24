@@ -60,6 +60,8 @@ namespace elc {
 		void addDistrict(string name, int num, int div);
 		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
 		
+		bool enoughReps();
+
 		void printCitizens();
 		void printParties();
 		void printDistricts();
