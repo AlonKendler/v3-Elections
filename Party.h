@@ -11,16 +11,14 @@ using namespace std;
 namespace elc {
 class CitizensList;
 
-	
 	class Party {
 	private:
 		string partyName;
 		int partyID;
-		const Citizen* boss; //citizen&
+		const Citizen* boss; 
 		vector<vector<Representative>> RepsList;
 
 	public:
-
 
 		Party() = default;
 		Party(string _partyName, const Citizen& _boss, int _id)
@@ -46,7 +44,6 @@ class CitizensList;
 		void setBoss(const Citizen& b)			{ boss = &b; };
 		void setpartyID(int n)				{ partyID = n; };
 
-		//work of shabat 21:00
 		void updateRepsList(unsigned int districtsAmount);
 		void addRepresentative(const Citizen& rep, int distID);
 

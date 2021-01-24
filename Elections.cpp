@@ -2,9 +2,8 @@
 #include <iostream>
 
 using namespace std;
+
 namespace elc {
-
-
 	void Elections::addCitizen(string name, int id, const District& dist, int yob)
 	{
 		try {
@@ -70,20 +69,9 @@ namespace elc {
 		return true;
 	}
 
-	void Elections::printCitizens() 
+	void Elections::handleSimpleRound(char* name, const int& reps)
 	{
-		cout << citizens; 
-	}
-	void Elections::printParties() 
-	{ 
-		cout << parties; 
-	}
-	void Elections::printDistricts() 
-	{ 
-		if (roundType)
-			cout << "No distrricts available" << endl;
-		else
-			cout << districts; 
+		districts.setDistrict(name, reps, true);
 	}
 	void Elections::printPartiesNameAndID()
 	{
@@ -101,8 +89,6 @@ namespace elc {
 		int numOfDistricts = districts.getList().size();
 		int numOfParties = parties.getList().size();
 		voting = Votes(numOfParties, numOfDistricts);
-	//	voting.setVotes_table(numOfDistricts, numOfParties);
-	//	voting.setElectors_table(numOfDistricts, numOfParties);
 	}
 
 	void Elections::setVote(Citizen& voter, const int& partyID) 
@@ -166,5 +152,4 @@ namespace elc {
 				districts.setCitizenInDist(*citizens.getList()[i], getDistrict(id));
 			}
 		}
-
 	}

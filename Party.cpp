@@ -82,7 +82,6 @@ namespace elc {
 	
 
 		//seralization of repsList
-
 		int rowsSize = RepsList.size();
 		int colsSize;
 

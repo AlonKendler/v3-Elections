@@ -27,8 +27,8 @@ namespace elc {
 		Citizen(string _name, int id, const District& _dist, int year)
 			: name(_name), ID(id), dist(&_dist), YOB(year), hasVoted(false) 
 		{
-			if (YOB < 0 || YOB > 2020) throw invalid_argument("invalid year of birth");
-			if (dist == nullptr) throw invalid_argument("distirct pointer of citizen is nullptr");
+			if (YOB < 0 ) throw invalid_argument("invalid year of birth");
+			if (dist == nullptr) throw invalid_argument("invalid district");
 		}
 
 		Citizen(const Citizen& o) : name(o.name), ID(o.ID), 

@@ -20,8 +20,6 @@ namespace elc
 			throw(invalid_argument("Citizen ID alredy listed, Citizen was not added."));
 	}
 
-
-	
 	Citizen* const CitizensList::getCitizenPtr(int id) const
 	{
 	

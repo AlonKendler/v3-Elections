@@ -25,15 +25,7 @@ namespace elc {
 
 		Elections() : roundType(0) {};
 		~Elections() {};
-		Elections(ifstream& in)
-		{
-			load(in);
-		}
-
-		void handleSimpleRound(char* name, const int& reps)
-		{	
-			districts.setDistrict(name, reps, true);
-		}
+		Elections(ifstream& in)	{load(in);}
 
 		int getPartiesLength() const				   { return parties.getList().size(); }
 		int getCitizensLength() const				   { return citizens.getList().size(); }
@@ -50,21 +42,19 @@ namespace elc {
 		District& getDistrict(int distID, bool flag)   { return districts.getDistrict(distID, flag); }
 		const DistrictsList& getDistList() const	   { return districts; }
 		const CitizensList& getCitizensList() const    { return citizens; }
-		const PartyList& getPartyList() const		{ return parties; }
+		const PartyList& getPartyList() const		   { return parties; }
     
-		void setDate(const Date& _date)					{ date = _date; }
-		void setRoundType(int _type)				{ roundType = _type; }
+		void setDate(const Date& _date)				   { date = _date; }
+		void setRoundType(int _type)			       { roundType = _type; }
 
 		void addCitizen(string name, int id, const District& dist, int yob);
 		void addParty(string name, const Citizen& boss);
 		void addDistrict(string name, int num, int div);
 		void addPartyCandidate(const Citizen& rep, int partyID, int distID);
 		
+		void handleSimpleRound(char* name, const int& reps);
 		bool enoughReps();
 
-		void printCitizens();
-		void printParties();
-		void printDistricts();
 		void printDistrictsNameAndID(); 
 		void printPartiesNameAndID();
 

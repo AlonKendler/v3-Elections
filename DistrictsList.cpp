@@ -5,7 +5,6 @@
 
 namespace elc
 {
-	
 	void DistrictsList::setDistrict(string _DistrictName, int numOfReps, int div)
 	{
 		District* temp;
@@ -13,7 +12,6 @@ namespace elc
 		if (div == 0) { temp = new Divided(_DistrictName, numOfReps, list.size()); }
 		else if( div == 1) { temp = new District(_DistrictName, numOfReps, list.size()); }
 		else { throw(invalid_argument("invalid District-Type")); }
-
 		setDistrict(temp);
 	}
 
@@ -24,12 +22,9 @@ namespace elc
 		auto it = find_if(list.begin(), list.end(),
 			[&name](District* obj) {return obj->getDistName() == name; });
 		if (it == list.end()) //means that we did not found a district with same name, good to add
-		{
 			list.push_back(_dist);
-		}
 		else { throw(invalid_argument("Existing district with the Same Name")); }
 	}
-
 
 	District* DistrictsList::getDistrictPtr(const int& distID) const
 	{
@@ -44,7 +39,6 @@ namespace elc
 	{
 		return(*getDistrictPtr(distID));
 	}
-
 
 	bool DistrictsList::setCitizenInDist(const Citizen& resident, const District& dist)
 	{
@@ -79,7 +73,6 @@ namespace elc
 		}
 		return out;
 	}
-
 
 	void DistrictsList::save(ofstream& out) const
 	{

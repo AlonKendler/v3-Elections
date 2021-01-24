@@ -39,15 +39,10 @@ namespace elc
 		}
 	}
 
-	//const string const PartyList::getPartyName(const int& partyID) const
-	//{
-	//	return list[partyID]->getPartyName();
-	//}
-
 	void PartyList::updateRepsList(int districtsAmount)
 	{
 		//here we want to iterate and check each party if his repsList is updated
-		// repsList (2s arrays, columns represent districtAmount)
+		// repsList (2d arrays, columns represent districtAmount)
 		for (auto obj : list)
 		{
 			obj->updateRepsList(districtsAmount);

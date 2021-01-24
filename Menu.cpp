@@ -3,11 +3,9 @@
 #include "Elections.h"
 
 using namespace std;
-
 using namespace elc;
 
 #define MAX_SIZE 50
-
 
 void mainMenu(Elections& e, bool& doneVoting);
 void inputDateAndElectionRound(Elections& e);
@@ -26,6 +24,12 @@ void results(Elections& e, bool& doneVoting);
 void simpleResults(Elections& e);
 void openVotingMenu(Elections& e);
 bool handleErrors(int ctrl, Elections& e);
+
+template<class T>
+void printObjects(T& objList)
+{
+	cout << objList;
+}
 
 enum menu { ADDdistrict = 1, ADDcitizen = 2, ADDparty = 3, ADDrep = 4,
 	PRINTdistrict = 5, PRINTcitizen = 6, PRINTparty = 7, VOTE = 8, 
@@ -93,7 +97,7 @@ void inputDateAndElectionRound(Elections& e)
 	char distName[20] = "system-District";
 
 	cout << " Welcome to Roy & Alon Election program!" << endl;
-	while(_date.getYear() == 1970) //temp condition, default year is 1970
+	while(_date.getYear() == 1970) // default year is 1970
 	{
 		cout << "please enter the date fot this run in 'DD/MM/YYYY' format: " << endl;
 		cout << "Enter Day: "; cin >> day;	   
@@ -113,7 +117,6 @@ void inputDateAndElectionRound(Elections& e)
 	if (type != 0 && type != 1) cout << "That imput was not a choice... ill make it a Simple round.." << endl;
 	if (type)
 	{
-
 		while (true)
 		{
 			e.setRoundType(type);
@@ -160,9 +163,9 @@ void mainMenu(Elections& e, bool& doneVoting)
 		case ADDcitizen:	{if (!doneVoting) { addCitizen(e); }break; }
 		case ADDparty:		{if (!doneVoting) { addParty(e); }break; }
 		case ADDrep:		{if (!doneVoting) { addPartyCandidates(e); }break; }
-		case PRINTdistrict: {e.printDistricts(); break; }
-		case PRINTcitizen:  {e.printCitizens(); break; }
-		case PRINTparty:    {e.printParties(); break; }
+		case PRINTdistrict: {printObjects(e.getDistList()); break; }
+		case PRINTcitizen:  {printObjects(e.getCitizensList()); break; }
+		case PRINTparty:    {printObjects(e.getPartyList()); break; }
 		case VOTE:			{if (!doneVoting) openVotingMenu(e); break; }
 		case RESULTS:		{try { results(e, doneVoting); }
 							catch (exception& ex) { cout << ex.what() << endl; } break; }

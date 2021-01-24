@@ -8,14 +8,11 @@ using namespace std;
 
 namespace  elc {
 
-
-
 	class PartyList
 	{
 	protected :
 		DynamicArray<Party*> list;
 		
-
 	public:
 		PartyList()  {}
 		PartyList(const PartyList& other) { list = other.list;  }

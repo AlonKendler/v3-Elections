@@ -32,16 +32,31 @@ namespace elc
 		addPartyRepToList(partyID, Representative(rep, partyID));
 	}
 
-	bool District::initRepsList(const int& size)
+	void swap(District& first, District& second) // nothrow
 	{
+		// enable ADL (not necessary in our case, but good practice) 
+		using std::swap;
 
-		for (int i = 0; i < size; i++)
-		{
-			RepsList.push_back(vector<Representative>());
-		}
-		return true;
+		// by swapping the members of two objects,
+		// the two objects are effectively swapped
+		swap(first.name, second.name);
+		swap(first.distID, second.distID);
+		swap(first.numOfReps, second.numOfReps);
+		swap(first.voters_precentage, second.voters_precentage);
+		swap(first.citizens, second.citizens);
+		swap(first.RepsList, second.RepsList);
 	}
-
+	
+	District& District::operator=(District other) // (1)
+	{
+		swap(*this, other); // (2)
+		return *this;
+	}
+	void District::initRepsList(const int& size)
+	{
+		for (int i = 0; i < size; i++)
+			RepsList.push_back(vector<Representative>());
+	}
 
 	void District::printNameAndId()
 	{

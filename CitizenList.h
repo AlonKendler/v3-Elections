@@ -29,10 +29,7 @@ namespace elc {
 		void setCitizen(const string name, int id, int yob, const District& district);
 
 		Citizen* const getCitizenPtr(int id) const;
-	//	const Citizen&  getCitizen(int id) const;
 		const DynamicArray<Citizen*> getList() const;
-
-		//bool removeCitizen(const Citizen&);
 
 		friend void swap(CitizensList& first, CitizensList& second);
 		CitizensList& operator=(CitizensList other);

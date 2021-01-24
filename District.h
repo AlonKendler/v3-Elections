@@ -28,7 +28,6 @@ namespace elc
 		District() : distID(0), numOfReps(0),
 			citizens(), RepsList(), voters_precentage(0) {};
 
-
 		District(string _name, int _numOfReps, int _id) :name(_name), distID(_id), numOfReps(_numOfReps),
 			citizens(), RepsList(), voters_precentage(0) {
 			cout << "Dist ctor:" << name << endl;
@@ -39,7 +38,6 @@ namespace elc
 		{ 
 			citizens = o.citizens;
 			RepsList = o.RepsList;
-			//*this = o;
 		}
 
 		virtual ~District() {}
@@ -69,33 +67,12 @@ namespace elc
 		const vector<Representative>& getRepsFromParty(const int partyID) const { return RepsList[partyID]; }
 		void printPartyRepsNames(const int& partyID)const;
 
-
-
-		//-----------------------------------------------------------------------------
 		//--https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
-		//-----------------------------------------------------------------------------
-		friend void swap(District& first, District& second) // nothrow
-		{
-			// enable ADL (not necessary in our case, but good practice) 
-			using std::swap;
+		friend void swap(District& first, District& second);
 
-			// by swapping the members of two objects,
-			// the two objects are effectively swapped
-			swap(first.name, second.name);
-			swap(first.distID, second.distID);
-			swap(first.numOfReps, second.numOfReps);
-			swap(first.voters_precentage, second.voters_precentage);
-			swap(first.citizens, second.citizens);
-			swap(first.RepsList, second.RepsList);
-		}
+		District& operator=(District other);
 
-		District& operator=(District other) // (1)
-		{
-			swap(*this, other); // (2)
-			return *this;
-		}
-
-		bool initRepsList(const int& size/*, Party* list*/);
+		void initRepsList(const int& size);
 
 		friend std::ostream& operator<<(std::ostream& out, const District& other);
 
@@ -109,8 +86,6 @@ namespace elc
 		void save(ofstream& out) const;
 		void load(ifstream& in);
 	};
-
-
 
 	//---------------Divided---------------//
 	//------------------------------------//
@@ -131,6 +106,5 @@ namespace elc
 		}
 
 		virtual std::ostream& print(std::ostream& out) const override;
-
 	};
 }

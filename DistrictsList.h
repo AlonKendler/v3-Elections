@@ -12,7 +12,7 @@ namespace  elc {
 	class DistrictsList
 	{
 	private:
-		DynamicArray<District*> list; //hold pointers vecause have base-inheritance disttricts
+		DynamicArray<District*> list; //hold pointers because have base-inheritance disttricts
 
 	public:
 		DistrictsList()  {}
@@ -23,7 +23,6 @@ namespace  elc {
 				delete itr;
 		}
 
-		
 		void setDistrict(string _DistrictName, int numOfReps, int div);
 		void setDistrict(District* _dist);
 
@@ -32,13 +31,10 @@ namespace  elc {
 		District* getDistrictPtr(const int& distID) const;
 		const District& getDistrict(const int& distID) const;
 
-
 		District& getDistrict(int distID, bool flag) const { return *(list[distID]); }
 		DynamicArray<District*> const getList() const { return list; }
 
-	//	const int& getTotalRepsInDist(const int& distID) const { return list[distID]->getDistReps(); }
 		void PrintNameAndId();
-
 
 		friend void swap(DistrictsList& first, DistrictsList& second);
 		DistrictsList& operator=(DistrictsList other);
@@ -46,7 +42,6 @@ namespace  elc {
 
 		void save(ofstream& out) const;
 		void load(ifstream& in);
-
 	};
 
 
