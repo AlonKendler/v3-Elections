@@ -63,7 +63,7 @@ namespace elc {
 			repsQuota = getDistrict(i).getDistReps();
 			for (int j = 0; j < getPartiesLength(); j++)
 			{
-				if (repsQuota > getParty(j)->getRepsList().size())
+				if (repsQuota > getParty(j)->getRepsList()[i].size())
 					return false;
 			}
 		}

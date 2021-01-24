@@ -27,6 +27,12 @@ void simpleResults(Elections& e);
 void openVotingMenu(Elections& e);
 bool handleErrors(int ctrl, Elections& e);
 
+enum menu { ADDdistrict = 1, ADDcitizen = 2, ADDparty = 3, ADDrep = 4,
+	PRINTdistrict = 5, PRINTcitizen = 6, PRINTparty = 7, VOTE = 8, 
+	RESULTS = 9, EXIT = 10, SAVE = 11, LOAD = 12 };
+
+enum firstMenu { CREATE=1, LOADD=2, EXITT =3 };
+
 void inputScreenPage1()
 {
 	std::cout << "--------intput screen--------" << endl;
@@ -73,9 +79,9 @@ void openingMenu(Elections& e)
 	}
 	switch (ctrl)
 	{
-	case 1: { system("CLS"); inputDateAndElectionRound(e); mainMenu(e,doneVoting); break; }
-	case 2: { load(&e, doneVoting) ; break; }
-	case 3: { std::cout << "Exit menu was chosen, byebye!" << endl; break; }
+	case CREATE: { system("CLS"); inputDateAndElectionRound(e); mainMenu(e,doneVoting); break; }
+	case LOADD: { load(&e, doneVoting) ; break; }
+	case EXITT: { std::cout << "Exit menu was chosen, byebye!" << endl; break; }
 	}
 }
 
@@ -134,7 +140,7 @@ void mainMenu(Elections& e, bool& doneVoting)
 	while (!done)
 	{
 		inputScreenPage2(e);
-		cin.ignore();
+		//cin.ignore();
 			cin >> ctrl;
 		while (ctrl < 1 || ctrl>12) //handle inputs
 		{
@@ -149,23 +155,20 @@ void mainMenu(Elections& e, bool& doneVoting)
 		system("CLS");
 		switch (ctrl)
 		{
-		case 1: {
-			if (!doneVoting && !e.getRoundType()) //check the round type
-				addDistric(e); 
-			else
-				std::cout << "function not avilable in a Simple Election round" << endl;break; }
-		case 2: {if (!doneVoting) { addCitizen(e); }break; }
-		case 3: {if (!doneVoting) { addParty(e); }break; }
-		case 4: {if (!doneVoting) { addPartyCandidates(e); }break; }
-		case 5: {e.printDistricts(); break; }
-		case 6: {e.printCitizens(); break; }
-		case 7: {e.printParties(); break; }
-		case 8: {if (!doneVoting) openVotingMenu(e); break; }
-		case 9: {try { results(e, doneVoting); }
-			  catch (exception& ex) { cout << ex.what() << endl; } break; }
-		case 10: { done = true; break; }
-		case 11: { save(e, doneVoting); break; }
-		case 12: { load(&e, doneVoting) ; break; }
+		case ADDdistrict:	{if (!doneVoting && !e.getRoundType()) addDistric(e); 
+						    else cout << "function not avilable in a Simple Election round" << endl;break; }
+		case ADDcitizen:	{if (!doneVoting) { addCitizen(e); }break; }
+		case ADDparty:		{if (!doneVoting) { addParty(e); }break; }
+		case ADDrep:		{if (!doneVoting) { addPartyCandidates(e); }break; }
+		case PRINTdistrict: {e.printDistricts(); break; }
+		case PRINTcitizen:  {e.printCitizens(); break; }
+		case PRINTparty:    {e.printParties(); break; }
+		case VOTE:			{if (!doneVoting) openVotingMenu(e); break; }
+		case RESULTS:		{try { results(e, doneVoting); }
+							catch (exception& ex) { cout << ex.what() << endl; } break; }
+		case EXIT:			{ done = true; break; }
+		case SAVE:			{ save(e, doneVoting); break; }
+		case LOAD:			{ load(&e, doneVoting) ; break; }
 		}
 	}
 	system("CLS");

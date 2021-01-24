@@ -50,9 +50,10 @@ namespace elc
 
 	void District::printPartyRepsNames(const int& partyID) const
 	{
+		int i = 1;
 		for (auto itr = RepsList[partyID].begin(); itr != RepsList[partyID].end(); ++itr)
 		{
-			cout << itr->getRep().getName() << endl;
+			cout << i++<<") "<<itr->getRep().getName() << endl;
 		}
 		cout << endl;
 	}

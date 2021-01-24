@@ -42,12 +42,15 @@ namespace elc {
 		
 		vector< vector<Representative> >::iterator row;	//similar to i-j for loop
 		vector<Representative>::iterator col;			//with iterators
-		for (row = other.RepsList.begin(); row != other.RepsList.end(); row++)
+		for (row = other.RepsList.begin(); row != other.RepsList.end(); ++row)
 		{
-			cout << "Representatives from District ID: " << row->begin()->getID() << endl;
-			for (col = row->begin(); col != row->end(); col++)
+			if (row->size() != 0)
 			{
-				cout << *col;
+				cout << "Representatives from District ID: " << row->begin()->getID() << endl;
+				for (col = row->begin(); col != row->end(); col++)
+				{
+					cout << *col;
+				}
 			}
 		}
 		return out;

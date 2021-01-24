@@ -48,7 +48,6 @@ namespace elc
 		{
 			votes_table[itr->first][itr->second]++;
 			++itr;
-			//vote_buffer.erase(vote_buffer.begin());
 		}
 	}
 
@@ -87,7 +86,11 @@ namespace elc
 
 	const float& Votes::getPartyVotesPrecentageInDist(const int& PartyID, const int& distID) const
 	{
-		return ((100 * (static_cast<float>(getPartyVotesInDist(PartyID, distID))) / getTotalVotesInDistrict(distID)));
+		int totalDistVotes = getTotalVotesInDistrict(distID);
+		if (totalDistVotes != 0)
+			return ((100 * (static_cast<float>(getPartyVotesInDist(PartyID, distID))) / totalDistVotes));
+		else
+			return 0;
 	}
 
 	const float& Votes::getTotalVotesPrecentage(const CitizensList& list)const
@@ -246,7 +249,7 @@ namespace elc
 	{
 		//-1 is for sanity check
 		unsigned int i;
-		int max = 0, winningPartyID = -1;
+		int max = -1, winningPartyID = -1;
 
 		for (i = 0; i < votes_table[distID].size(); i++)
 		{
